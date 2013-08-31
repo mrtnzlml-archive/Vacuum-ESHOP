@@ -1,0 +1,76 @@
+{block |strip|trim}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="robots" content="{$robots}" n:ifset="$robots">
+
+	<title>
+		{$setting->title_prefix}
+		{$setting->title_separator}
+		{#title|striptags}Uživatelské rozhraní{/#}
+		{$setting->title_sufix}
+	</title>
+
+	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/bootstrap.min.css">
+	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/screen.css">
+	<link rel="stylesheet" media="print" href="{$basePath}/css/print.css">
+	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
+	{#head}{/#}
+</head>
+
+<body>
+	<script> document.body.className+=' js' </script>
+
+	<div id="header">
+		<div id="buttons">
+			<ul>
+				<li><a n:href=":Front:Register:new" style="background-image: url('{$basePath}/images/button_greenl.png')">vytvořit profil</a></li>
+				{if !$user->isLoggedIn()}
+					<li><a n:href=":Auth:Sign:in" style="background-image: url('{$basePath}/images/button_greend.png')">přihlásit se</a></li>
+				{else}
+					<li><a n:href=":Auth:Sign:out" style="background-image: url('{$basePath}/images/button_greend.png')">odhlásit se</a></li>
+				{/if}
+			</ul>
+		</div>
+		<div class="basket">
+			{if $user->isAllowed('price', 'view')}
+				{snippet basket}
+					<h3><a n:href=":Front:Basket:summary">Nákupní košík ({$basket->getItemsCount()})</a></h3>
+				{/snippet}
+			{/if}
+		</div>
+	</div>
+
+	<div id="menu">
+		<ul>
+			<li><a n:href=":Front:Product:default">Homepage</a></li>
+			<li n:class="$presenter->name=='User:Setting'?active"><a n:href=":User:Setting:default">Nastavení</a></li>
+			{* <li n:class="$presenter->name=='User:Orders'?active"><a n:href=":User:Orders:default">Orders</a></li> *}
+		</ul>
+	</div>
+
+	<div id="main">
+		<div class="inner">
+			<div n:foreach="$flashes as $flash" class="alert {$flash->type}">{$flash->message}</div>
+			{include #content}
+		</div>
+	</div>
+
+	<div id="footer">
+		<img src="{$basePath}/images/icon_ieaste.png">
+		Provozovatelem portálu a vlastníkem obchodní značky iKariera je nezisková organizace IEASTE České Republiky<br>
+		Všechna práva vyhrazena<br>
+		2009 - {date('Y')}
+	</div>
+
+	{#scripts}
+	<script src="{$basePath}/js/jquery.js"></script>
+	<script src="{$basePath}/js/holder.js"></script>
+	<script src="{$basePath}/js/netteForms.js"></script>
+	<script src="{$basePath}/js/nette.ajax.js"></script>
+	<script src="{$basePath}/js/main.js"></script>
+	{/#}
+</body>
+</html>
+{/block}

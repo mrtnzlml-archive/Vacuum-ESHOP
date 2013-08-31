@@ -1,0 +1,128 @@
+{#content}
+
+<div class="row-fluid">
+	<div class="span5">
+		{if !empty($pictures)}
+			{var $promo = $productsRepository->getPromotedPicture($product->id)}
+			{foreach $pictures as $picture}
+				{if $iterator->counter == 1}
+					<a href="{$basePath}/uploads/{$promo->product_id}/default/{$promo->name}" id="zoom01" class="cloud-zoom" rel="position:'right',adjustX:20,tint:'#FFFFFF',softFocus:1,smoothMove:2,tintOpacity:0.8,zoomWidth:551,zoomHeight:400">
+						<img src="{$basePath}/uploads/{$promo->product_id}/378x400/{$promo->name}" width="378" height="400" class="img-polaroid" />
+					</a>
+					<a href="{$basePath}/uploads/{$picture->product_id}/default/{$picture->name}" rel="useZoom: 'zoom01', smallImage: '{$basePath}/uploads/{$picture->product_id}/378x400/{$picture->name}'" class="cloud-zoom-gallery">
+						<img src="{$basePath}/uploads/{$picture->product_id}/116x100/{$picture->name}" class="img-polaroid gallery" />
+					</a>
+				{else}
+					<a href="{$basePath}/uploads/{$picture->product_id}/default/{$picture->name}" rel="useZoom: 'zoom01', smallImage: '{$basePath}/uploads/{$picture->product_id}/378x400/{$picture->name}'" class="cloud-zoom-gallery">
+						<img src="{$basePath}/uploads/{$picture->product_id}/116x100/{$picture->name}" class="img-polaroid gallery" />
+					</a>
+				{/if}
+			{/foreach}
+		{else}
+			<img src="holder.js/378x400/" class="img-polaroid" width="300" height="400" />
+
+			<img src="holder.js/116x100/" class="img-polaroid gallery" width="300" height="400" />
+			<img src="holder.js/116x100/" class="img-polaroid gallery" width="300" height="400" />
+			<img src="holder.js/116x100/" class="img-polaroid gallery" width="300" height="400" />
+
+			<img src="holder.js/116x100/" class="img-polaroid gallery" width="300" height="400" />
+			<img src="holder.js/116x100/" class="img-polaroid gallery" width="300" height="400" />
+		{/if}
+	</div>
+	<div class="span7">
+		<h2 n:block=title>{$product->name}</h2>
+		<table class="table">
+			<tr>
+				<th>Datum konání akce:</th>
+				<td>{$product->event_date|date:'d. m. Y'}</td>
+			</tr>
+			{if $user->isAllowed('price', 'view')}
+				{if $product->active === 'y'}
+					<tr>
+						<th>Výsledná cena:</th>
+						<td><span class="priceDPH" data-default="{$product->price|dph}">{$product->price|dph|money}</span></td>
+					</tr>
+					<tr>
+						<th>Cena bez DPH:</th>
+						<td><span class="price" data-default="{$product->price}">{$product->price|money}</span></td>
+					</tr>
+				{elseif $product->active === 'x'}
+				{/if}
+			{/if}
+		</table>
+
+		{if $user->isAllowed('price', 'view')}
+			{if $product->active === 'y'}
+				<div style="width:75%">
+					{include '../../../templates/form.latte', form => $presenter[buyForm]}
+				</div>
+			{elseif $product->active === 'x'}
+				<a n:href="contact!, $product->id"><button class="btn contact">Mám zájem, kontaktujte mě</button></a>
+			{/if}
+		{else}
+			<p><a n:href=":Front:Register:new">Zaregistrovat se</a></p>
+		{/if}
+
+		<p>{!$product->description|texy}</p>
+	</div>
+</div>
+
+<div class="row-fluid">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+		var disqus_shortname = 'iaeste';
+		(function() {
+			var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+			dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+			(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+		})();
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+{/#}
+
+
+
+
+
+{#scripts}
+{include #parent}
+<script type='text/javascript' src='{$basePath}/js/cloud-zoom.js'></script>
+<script>
+	jQuery('#zoom01, .cloud-zoom-gallery').CloudZoom();
+</script>
+
+<script>
+	$(function() {
+		$("#frm-buyForm-variant").change(function() {
+			var values = $("#frm-buyForm-variant").val().split("###");
+			if(values[2] === 'abs') {
+				$(".price").html(number_format(+($('.price').data('default')) + +(values[1]), 0, ',', ' ') + '&nbsp;Kč');
+				$(".priceDPH").html(number_format(+($('.priceDPH').data('default')) + +(values[1]), 0, ',', ' ') + '&nbsp;Kč');
+			} else if(values[2] === 'rel') {
+				var defaultPrice = $('.price').data('default');
+				var defaultPriceDPH = $('.priceDPH').data('default');
+				var diff = +(defaultPrice)/100 * +(values[1]);
+				var diffDPH = +(defaultPriceDPH)/100 * +(values[1]);
+				var newPrice = +(defaultPrice) + diff;
+				var newPriceDPH = +(defaultPriceDPH) + diff;
+				$(".price").html(number_format(newPrice, 0, ',', ' ') + '&nbsp;Kč');
+				$(".priceDPH").html(number_format(newPriceDPH, 0, ',', ' ') + '&nbsp;Kč');
+			} else if(values[2] === 'price') {
+				$(".price").html(number_format(values[1], 0, ',', ' ') + '&nbsp;Kč');
+				var newPriceDPH = +(values[1]/100*{$setting->dph}) + +values[1];
+				$(".priceDPH").html(number_format(newPriceDPH, 0, ',', ' ') + '&nbsp;Kč');
+			} else { //undefined
+				$(".price").html(number_format($('.price').data('default'), 0, ',', ' ') + '&nbsp;Kč');
+				$(".priceDPH").html(number_format($('.priceDPH').data('default'), 0, ',', ' ') + '&nbsp;Kč');
+			}
+		});
+	});
+</script>
+{/#}
+
+{#head}
+<style>img { max-width: none; }</style>
+{/#}

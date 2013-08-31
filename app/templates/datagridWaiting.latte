@@ -1,0 +1,86 @@
+{define table-open-tag}
+	<table class="table table-striped table-hover">
+{/define}
+
+{define global-filter-actions}
+	<span style="white-space:nowrap">
+		{input filter, class => "btn btn-primary", value => Filtrovat}
+		{if $showCancel}
+			{input cancel class => "btn"}
+		{/if}
+	</span>
+{/define}
+
+{define col-filter}
+	{input $column->name, class => grid-input}
+{/define}
+
+{define row-edit-actions}
+	{input save class => "btn btn-primary"}
+	{input cancel class => "btn"}
+{/define}
+
+{if $control->getEditFormFactory()}
+	{var $rowActions = 'row-actions'}
+{else}
+	{var $rowActions = 'row-actions-do_not_render'}
+{/if}
+
+{define $rowActions}
+	<a href="{link edit! $primary}" data-datagrid-edit class="ajax btn btn-primary">Edit</a>
+{/define}
+
+{define pagination}
+	{if $paginator->pageCount > 1}
+		<div class="pagination pagination-centered">
+			<ul>
+				<?php
+					$page = $paginator->getPage();
+					if ($paginator->pageCount < 2) {
+						$steps = array($page);
+					} else {
+						$arr = range(max($paginator->firstPage, $page - 3), min($paginator->lastPage, $page + 3));
+						$count = 4;
+						$quotient = ($paginator->pageCount - 1) / $count;
+						for ($i = 0; $i <= $count; $i++) {
+							$arr[] = round($quotient * $i) + $paginator->firstPage;
+						}
+						sort($arr);
+						$steps = array_values(array_unique($arr));
+					}
+				?>
+				{if $paginator->isFirst()}
+					<li class="disabled"><a>« Předchozí</a></li>
+				{else}
+					<li><a href="{link paginate!, 'page' => $paginator->page - 1}" class="ajax">« Předchozí</a></li>
+				{/if}
+
+				{foreach $steps as $step}
+					{if $step == $paginator->page}
+						<li class="active"><a>{$step}</a></li>
+					{else}
+						<li><a href="{link paginate!, 'page' => $step}" class="ajax">{$step}</a></li>
+					{/if}
+					{if $iterator->nextValue > $step + 1}<li class="disabled"><a>…</a></li>{/if}
+				{/foreach}
+
+				{if $paginator->isLast()}
+					<li class="disabled"><a>Další »</a></li>
+				{else}
+					<li><a href="{link paginate!, 'page' => $paginator->page + 1}" class="ajax">Další »</a></li>
+				{/if}
+			</ul>
+		</div>
+	{/if}
+{/define}
+
+
+
+
+
+{define row-actions}
+	<span style="white-space:nowrap">
+		<a href="{plink deleteRegistration!, $row->id}" class="btn btn-danger ajax" data-confirm="Opravdu chcete tuto registraci trvale zrušit?">Smazat bez upozornění</a>
+		<a href="{plink :Admin:Users:approve, $row->id}" class="btn btn-success">Schválit</a>
+	</span>
+{/define}

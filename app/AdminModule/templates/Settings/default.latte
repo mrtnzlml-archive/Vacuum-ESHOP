@@ -1,0 +1,33 @@
+{#content}
+{if isset($waiting) && !empty($waiting) && $user->isInRole('admin')}
+	{include '../waiting.latte'}
+{/if}
+
+<h1 n:block="title">Nastavení eshopu</h1>
+
+<div class="tabbable">
+
+	<ul id="tabs" class="nav nav-tabs">
+		<li class="active"><a href="#mainTab" data-toggle="tab">Systémové nastavení</a></li>
+		<li><a href="#visual" data-toggle="tab">Vizuální nastavení</a></li>
+		<li><a href="#export" data-toggle="tab">Export</a></li>
+	</ul>
+
+	<div class="tab-content" style="min-height:500px">{*UX*}
+		<div class="tab-pane active" id="mainTab">
+			<div class="span6">
+				{include '../../../templates/form.latte', form => $presenter[systemSetting]}
+			</div>
+		</div>
+
+		<div class="tab-pane" id="visual">
+			<div class="span6">
+				{include '../../../templates/form.latte', form => $presenter[visualSetting]}
+			</div>
+		</div>
+
+		<div class="tab-pane" id="export">
+			<a n:href="exportOrdersCSV!"><button class="btn">Exportovat objednávky do CSV</button></a>
+		</div>
+	</div>
+</div>

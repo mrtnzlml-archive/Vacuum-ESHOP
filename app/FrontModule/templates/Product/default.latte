@@ -1,0 +1,54 @@
+{#content}
+<div class="row-fluid">
+	<h3 style="margin-top:0">O nás</h3>
+	<p>
+		Jsme mezinárodní organizace s více jak šedesátiletou tradicí. Působíme v 85 zemích světa.
+		Naším hlavním posláním je zajišťování zahraničních praxí pro studenty technických vysokých škol.
+		Celosvětově tak IAESTE přispívá k rozvoji odborných znalostí studentů, k porozumění mezi národy i k
+		odstranění rozdílů v technické vyspělosti jednotlivých zemí.
+	</p>
+	<p>
+		Organizaci IAESTE v České republice tvoří z drtivé části sami studenti, kteří se dobrovolně podílejí na
+		realizaci všech aktivit a přitom se učí novým věcem, zlepšují své dovednosti a v neposlední řadě se
+		baví v dobré partě přátel. Organizace tak stojí a padá s jejich schopnostmi, zapáleností pro věc, chutí tvořit.
+	</p>
+	<h3>Přehled všech nabízených produktů</h3>
+</div>
+
+<div class="row-fluid">
+	{if count($products) === 0}
+		<div class="alert alert-error">Momentálně nejsou žádné produkty k prodeji.</div>
+	{/if}
+	<div class="span4 product" n:foreach="$products as $product">
+		{var $picture = $productsRepository->getPromotedPicture($product->id)}
+		{if $picture}
+			<div style="height:210px">
+				<a n:href="detail $product->slug">
+					<img src="{$basePath}/uploads/{$product->id}/286x200/{$picture->name}" class="img-polaroid" />
+				</a>
+			</div>
+		{else}
+			<a n:href="detail $product->slug">
+				<img src="holder.js/286x200/" class="img-polaroid" />
+			</a>
+		{/if}
+		<a n:href="detail $product->slug"><h4>{$product->name}</h4></a>
+		<p class="description">{!$product->description|texy|striptags|truncate:200}</p>
+		{if $user->isAllowed('price', 'view')}
+			{if $product->active === 'y'}
+				<p class="price">Cena: {$product->price|dph|money} včetně DPH</p>
+				{if $productsRepository->hasVariant($product->id)}
+					<p class="to-basket"><a n:href="detail $product->slug" class="btn">Zvolit variantu produktu</a></p>
+				{else}
+					<p class="to-basket"><a n:href="addItem! $product->id" class="ajax btn">Přidat do košíku</a></p>
+				{/if}
+			{elseif $product->active === 'x'}
+				<a n:href="contact!, $product->id"><button class="btn contact">Mám zájem, kontaktujte mě</button></a>
+			{/if}
+		{else}
+			<p><a n:href=":Front:Register:new">Zaregistrovat se</a></p>
+		{/if}
+	</div>
+</div>
+
+{control paginator}

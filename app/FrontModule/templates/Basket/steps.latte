@@ -1,0 +1,26 @@
+<div class="row-fluid steps">
+	<div class="span4{if $presenter->isLinkCurrent(':Front:Basket:summary')} active{/if}">
+		<span>1</span>
+		{if array_key_exists('summary', $steps)}
+			<a n:href=":Front:Basket:summary">Obsah košíku</a>
+		{else}
+			Obsah košíku
+		{/if}
+	</div>
+	<div class="span4{if $presenter->isLinkCurrent(':Front:Basket:invoicing')} active{/if}">
+		<span>2</span>
+		{if array_key_exists('invoicing', $steps)}
+			<a n:href=":Front:Basket:invoicing">Fakturační informace</a>
+		{else}
+			Fakturační informace
+		{/if}
+	</div>
+	<div class="span4{if $presenter->isLinkCurrent(':Front:Basket:last')} active{/if}">
+		<span>3</span>
+		{if array_key_exists('last', $steps)}
+			<a n:href=":Front:Basket:last">Poslední kontrola</a>
+		{else}
+			Poslední kontrola
+		{/if}
+	</div>
+</div>

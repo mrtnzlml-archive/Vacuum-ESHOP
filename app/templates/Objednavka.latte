@@ -1,0 +1,146 @@
+<html>
+<head>
+	<style>
+		html, body { font-family: sans-serif; color: #000000; }
+		img { width: 100%; }
+		.margin { margin: 0 30mm; }
+		table, th, td { border: 1px solid black; border-collapse: collapse; }
+		th, td { padding: 5px 10px; }
+	</style>
+</head>
+<body>
+<htmlpageheader name="MyHeader1">
+	<img src="../www/images/PDFHeader.png" />
+</htmlpageheader>
+<htmlpagefooter name="MyFooter1">
+	&nbsp;
+</htmlpagefooter>
+<sethtmlpageheader name="MyHeader1" value="on" show-this-page="1" />
+<sethtmlpagefooter name="MyFooter1" value="on" />
+
+<div class="margin">
+	<h1 style="text-align:center">OBJEDNÁVKA PROJEKTU</h1>
+
+	<address>
+		<strong>The International Association for Exchange of Students for Technical Experience (I.A.E.S.T.E.) - IAESTE České republiky</strong><br>
+		registrované Ministerstvem vnitra ČR, č.j.: VS/1-1/5554/99/r<br>
+		se sídlem v Praze 6, Zikova 4,<br>
+		IČ: 00540293<br>
+		DIČ: CZ00540293
+	</address>
+
+	<p><strong>zastoupené na základě plné moci ze dne 14. května 2009</strong></p>
+
+	<address>
+		<strong>Lokální centrum: {ifset $lc->name}{$lc->name}{/ifset}</strong><br>
+		se sídlem {ifset $lc->seat}{$lc->seat}{/ifset}<br>
+		IČ: {ifset $lc->IC}{$lc->IC}{/ifset}<br>
+		DIČ: {ifset $lc->DIC}{$lc->DIC}{/ifset}<br>
+		číslo účtu: {ifset $lc->account}{$lc->account}{/ifset}<br>
+		zastoupené: {ifset $lc->represented_by}{$lc->represented_by}{/ifset}<br>
+	</address>
+
+	<p><strong>na straně jedné (dále jen „IAESTE“ nebo „Dodavatel“)</strong></p>
+	<p><strong>a</strong></p>
+
+	<address>
+		<strong>Název společnosti: {ifset $client['company_name']}{$client['company_name']}{/ifset}</strong><br>
+		se sídlem {ifset $client['seat']}{$client['seat']}{/ifset}<br>
+		IČ: {ifset $client['IC']}{$client['IC']}{/ifset}<br>
+		DIČ: {ifset $client['DIC']}{$client['DIC']}{/ifset}<br>
+		číslo účtu: {ifset $client['account']}{$client['account']}{/ifset}<br>
+		zastoupené: {ifset $client['represented_by']}{$client['represented_by']}{/ifset}<br>
+	</address>
+
+	<p><strong>na straně druhé (dále jen „Objednavatel“)</strong></p>
+
+	<ol>
+		<li>
+			Objednatel má uzavřenou „Rámcovou smlouvu o zabezpečení účasti Objednatele na projektech
+			IAESTE“ s IAESTE České republiky, IČ: 00540293, které zastupuje dodavatel na základě plné moci.
+		</li>
+		<li>
+			Objednatel touto objednávkou požaduje po Dodavateli zajistit účast na následujících projektech
+			pořádaných IAESTE:
+		</li>
+	</ol>
+
+	<table cellspacing="0" cellpadding="0">
+		<thead>
+		<tr>
+			<th>Popis projektu</th>
+			<th>Cena bez DPH</th>
+			<th>Množství</th>
+			<th>Cena celkem bez DPH</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr n:foreach="$items as $item">
+			{var $product = $productsRepository->getById($item['product_id'])->fetch()}
+			<td>{$product->name}</td>
+			<td>{number_format($item['price'], 0, ',', ' ')} Kč</td>
+			<td>{number_format($item['count'], 0, ',', ' ')} Kč</td>
+			<td>{number_format($item['price'] * $item['count'], 0, ',', ' ')} Kč</td>
+		</tr>
+		</tbody>
+	</table>
+
+	<p>
+		Objednatel určuje svého zástupce pro jednání k výše uvedeným projektům:<br>
+		Jméno:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		funkce:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		telefon:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	</p>
+
+	<ol start="3">
+		<li>
+			Objednatel se zavazuje dodat Dodavateli následující podklady:
+		</li>
+	</ol>
+
+	<table cellspacing="0" cellpadding="0">
+		<thead>
+		<tr>
+			<th>Popis</th>
+			<th>Elektronická podoba</th>
+			<th>Listinná podoba</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td>Logo společnosti</td>
+			<td>ANO</td>
+			<td>NE</td>
+		</tr>
+		<tr>
+			<td>Kreativní strana do průvodce veletrhem formát A5</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		</tbody>
+	</table>
+
+	<p>Nároky kladené na tyto podklady se nalézají v Příloze 1 této smlouvy.</p>
+
+	<ol start="4">
+		<li>
+			Smluvní vztahy jsou upraveny rámcovou smlouvou uzavřenou mezi Objednatelem a Dodavatelem.
+			Objednatel se zavazuje uhradit výše uvedenou cenu za jednotlivé projekty. Smluvní cenu za
+			dané projekty bude účtovat buď přímo Dodavatel nebo jeho zástupce.
+		</li>
+		<li>
+			Dodavatel si může vyžádat v případě potřeby další podklady, které nejsou v této objednávce uvedeny.
+		</li>
+		<li>
+			Objednávka je závazná pro Objednatele jejím potvrzením a odesláním na Dodavatele.
+			Smlouva je uzavřena okamžikem, kdy Objednatel obdrží potvrzenou objednávku Objednatele od Dodavatele.
+			Objednávka i její potvrzení může být zaslána elektronicky.
+		</li>
+	</ol>
+
+	<p>V ...................................................... dne: ......................</p>
+
+</div>
+</body>
+</html>

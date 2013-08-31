@@ -1,0 +1,283 @@
+<html>
+<head>
+	<style>
+		html, body { font-family: sans-serif; color: #000000; }
+		img { width: 100%; }
+		.margin { margin: 0 30mm; }
+	</style>
+</head>
+<body>
+<htmlpageheader name="MyHeader1">
+	<img src="../www/images/PDFHeader.png" />
+</htmlpageheader>
+<htmlpagefooter name="MyFooter1">
+	&nbsp;
+</htmlpagefooter>
+<sethtmlpageheader name="MyHeader1" value="on" show-this-page="1" />
+<sethtmlpagefooter name="MyFooter1" value="on" />
+
+<div class="margin">
+	<address>
+		<strong>The International Association for Exchange of Students for Technical Experience (I.A.E.S.T.E.) - IAESTE České republiky</strong><br>
+		registrované Ministerstvem vnitra ČR, č.j.: VS/1-1/5554/99/r<br>
+		se sídlem v Praze 6, Zikova 4,<br>
+		IČ: 00540293<br>
+		DIČ: CZ00540293
+	</address>
+
+	<p><strong>zastoupené na základě plné moci ze dne 14. května 2009</strong></p>
+
+	<address>
+		<strong>Lokální centrum: {ifset $lc->name}{$lc->name}{/ifset}</strong><br>
+		se sídlem {ifset $lc->seat}{$lc->seat}{/ifset}<br>
+		IČ: {ifset $lc->IC}{$lc->IC}{/ifset}<br>
+		DIČ: {ifset $lc->DIC}{$lc->DIC}{/ifset}<br>
+		číslo účtu: {ifset $lc->account}{$lc->account}{/ifset}<br>
+		zastoupené: {ifset $lc->represented_by}{$lc->represented_by}{/ifset}<br>
+	</address>
+
+	<p><strong>na straně jedné (dále jen „IAESTE“)</strong></p>
+	<p><strong>a</strong></p>
+
+	<address>
+		<strong>Název společnosti: {ifset $usr->company_name}{$usr->company_name}{/ifset}</strong><br>
+		se sídlem {ifset $usr->seat}{$usr->seat}{/ifset}<br>
+		IČ: {ifset $usr->IC}{$usr->IC}{/ifset}<br>
+		DIČ: {ifset $usr->DIC}{$usr->DIC}{/ifset}<br>
+		číslo účtu: {ifset $usr->account}{$usr->account}{/ifset}<br>
+		zastoupené: {ifset $usr->represented_by}{$usr->represented_by}{/ifset}<br>
+	</address>
+
+	<p><strong>na straně druhé (dále jen „Objednavatel“)</strong></p>
+
+	<p>uzavřely podle § 269 odst. 2 zákona č. 513/1991 Sb., obchodní zákoník, ve znění pozdějších předpisů tuto</p>
+
+	<h1 style="text-align:center">Rámcovou smlouvu o zabezpečení účasti Objednavatele na projektech IAESTE.</h1>
+
+	<p>Touto smlouvou se upravují vzájemná práva a povinnosti smluvních stran z účasti objednatele na projektu IAESTE.</p>
+
+	<h3 style="text-align:center">I. Preambule smlouvy</h3>
+	<ol>
+		<li>
+			IAESTE České republiky je právnickou osobou, která je dobrovolnou, neziskovou, samostatnou, nezávislou,
+			nevládní, nepolitickou společenskou organizací. Organizace působí v České republice podle zákona č. 116/1985 Sb.,
+			o podmínkách činnosti organizací s mezinárodním prvkem v ČSFR, a to na základě rozhodnutí bývalého FMV č.j.
+			OV-225/P-90 ze dne 21.3.1990. IAESTE si klade za cíl zvyšování odborných a jazykových znalostí studentů a
+			absolventů vysokých škol a kromě jiných aktivit pořádá pro studenty a absolventy různé projekty zaměřené na
+			pracovní příležitosti, při nichž studenti a absolventi získávají nové znalosti.
+		</li>
+		<li>Objednatel je zájemce o účast na jednotlivých projektech IAESTE nebo účast mezi partnery IAESTE.</li>
+		<li>Touto smlouvou se upravují vzájemná práva a povinnosti smluvních stran z účasti objednatele na projektu IAESTE.</li>
+	</ol>
+
+	<h3 style="text-align:center">II. Předmět smlouvy</h3>
+	<ol>
+		<li>
+			Předmětem této smlouvy je stanovení smluvních podmínek, za kterých bude IAESTE opakovaně zabezpečovat účast
+			Objednavatele na projektech IAESTE a za kterých se Objednavatel opakovaně stane partnerem IAESTE.
+		</li>
+		<li>Tato smlouva se vztahuje na všechny projekty IAESTE a partnerství IAESTE.</li>
+		<li>
+			Jednotlivé projekty IAESTE a partnerství jsou pro každý kalendářní rok popsány v nabídce projektů IAESTE,
+			která vychází v tištěné podobě. V této nabídce jsou rovněž vždy uvedeny ceny účasti na jednotlivých projektech a
+			partnerství pro daný kalendářní rok. Celková cena za účast na projektech a partnerstvích bude určena v příslušné objednávce.
+		</li>
+		<li>
+			Účast na projektech a partnerství bude realizována na základě objednávek, pro které budou platit podmínky
+			dohodnuté v této rámcové smlouvě. Objednatel bude objednávat svoji účast na jednotlivých projektech nebo
+			své partnerství formou vzorové objednávky IAESTE. Objednávka bude závazná v okamžiku, kdy ji IAESTE potvrdí
+			a dojde k uzavření smlouvy na jednotlivou aktivitu IAESTE (projekt nebo partnerství).
+		</li>
+		<li>
+			Objednávka IAESTE bude obsahovat seznam materiálů, které musí dodat Objednatel a bude obsahovat popis
+			jednotlivého projektu nebo odkáže na dokument IAESTE, který tento popis obsahuje, a tím se stane takovýto
+			dokument IAESTE nedílnou součástí jednotlivé smlouvy.
+		</li>
+		<li>
+			Objednatel může vypovědět jednotlivou smlouvu na konkrétní projekt nebo projekty vypovědět ve lhůtě 30 dní
+			před plánovaným zahájením projektu nebo prvního z objednaných projektů. Po uplynutí této lhůty nemůže
+			objednatel vypovědět jednotlivou smlouvu na konkrétní projekt nebo projekty, a pokud bude chtít od
+			takovéto jednotlivé smlouvy odstoupit, pak musí uhradit IAESTE odstupné ve výši 100% ceny sjednané v 
+			takovéto jednotlivé smlouvě pro IAESTE.
+		</li>
+	</ol>
+
+	<h3 style="text-align:center">III. Práva a povinnosti IAESTE</h3>
+	<ol>
+		<li>
+			IAESTE se touto rámcovou smlouvou zavazuje, že po uzavření jednotlivých smluv na aktivitu IAESTE bude v
+			dohodnutém rozsahu zajišťovat účast Objednavatele na objednaném projektu a řádně poskytovat veškeré
+			služby dohodnuté v jednotlivé smlouvě pro daný projekt.
+		</li>
+		<li>
+			IAESTE je oprávněno jednostranně změnit názvy jednotlivých projektů, a to nejpozději 10 dnů
+			před datem konání předmětného projektu. IAESTE je povinno zajistit, aby byl Objednavatel o takovéto
+			změně informován nejpozději 10 dnů před datem konání předmětného projektu.
+		</li>
+		<li>
+			IAESTE je oprávněno změnit termíny konání jednotlivých projektů, a to nejpozději 30 dnů před původně sjednaným
+			termínem konání předmětného projektu. IAESTE je povinno zajistit, aby byl Objednavatel o takovéto změně
+			informován nejpozději 30 dnů před původně oznámeným termínem konání předmětného projektu.
+		</li>
+		<li>
+			IAESTE je oprávněno v odůvodněných případech i jednotlivé projekty zrušit, a to nejpozději 10 dnů před
+			oznámeným termínem konání předmětného projektu. V případě zrušení projektu, je IAESTE povinno zajistit,
+			aby byl Objednavatel o zrušení projektu informován nejpozději 10 dnů před oznámeným termínem konání předmětného
+			projektu. V takovém případě není Objednavatel povinen platit smluvenou cenu za zajištění účasti na projektu,
+			který bude zrušen, a již zaplacenou částku na tuto cenu je IAESTE povinno Objednavateli vrátit nejpozději do
+			30 dnů ode dne rozhodnutí o zrušení předmětného projektu. Vrácením částky zaplacené na cenu zrušeného projektu
+			budou veškerá vzájemná práva a povinnosti stran ve vztahu ke zrušenému projektu vypořádána, a
+			Objednateli nepřísluší žádná náhrada škody.
+		</li>
+		<li>
+			V případě, že IAESTE nedodrží smluvenou kvalitu či termín jednotlivého projektu, není
+			Objednavatel povinen platit smluvenou cenu za zajištění účasti na tomto projektu.
+			Obě smluvní strany se dohodnou na ceně nové či na možnosti nezaplacení předmětného projektu Objednatelem v
+			závislosti na míře pochybení IAESTE. Stanovením a zaplacením nové ceny budou veškerá vzájemná práva a
+			povinnosti stran ve vztahu k předmětnému projektu vypořádána, a Objednateli nepřísluší žádná další náhrada škody.
+		</li>
+	</ol>
+
+	<h3 style="text-align:center">IV. Práva a povinnosti Objednavatele</h3>
+	<ol>
+		<li>
+			Objednavatel se zavazuje poskytovat bezplatně pro realizaci jednotlivých smluv IAESTE nezbytnou součinnost,
+			zejména včas předkládat v dohodnutém formátu a kvalitě logo a další podklady potřebné ke smluvené prezentaci
+			Objednavatele. Termíny pro dodání podkladů, požadavky na logo a další grafické materiály a způsob řešení
+			korektur budou uvedeny v jednotlivých objednávkách.
+		</li>
+		<li>
+			Objednavatel dává výslovný souhlas s bezplatným uveřejněním loga a názvu Objednavatele v
+			rubrikách „partneři IAESTE“ ve všech oficiálních materiálech IAESTE a s uváděním názvu Objednavatele v
+			seznamech referencí IAESTE. IAESTE bere na vědomí, že mu nejsou poskytnuta jakákoli práva k logu a dodaným
+			grafickým materiálům Objednavatele, s výjimkou těch, která jsou nutná ke splnění této rámcové smlouvy a
+			objednávek uzavřených na jejím základě resp. k účelu pro nějž došlo k uzavření těchto smluv. IAESTE bere na
+			vědomí, že ji tato smlouva neopravňuje užít logo Objednavatele v jiných než dohodnutých případech.
+		</li>
+		<li>
+			Objednavatel dává IAESTE výslovný souhlas k zasílání obchodních sdělení, k zasílání informací o
+			akcích pořádaných IAESTE a jeho partnery a o projektech IAESTE.
+		</li>
+		<li>
+			Objednatel při objednávání konkrétního projektu určí v objednávce osobu, která bude jeho
+			jménem jednat za Objednatele s IAESTE ve věci konkrétního projektu a uvede na tuto osobu základní
+			kontakty (telefon, e-mail). Pokud nebude v objednávce kontaktní osoba Objednatele určena, tak kontaktní osobou bude :
+			Jméno:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			funkce:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			telefon:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		</li>
+	</ol>
+
+	<h3 style="text-align:center">V. Platební podmínky</h3>
+	<ol>
+		<li>
+			Objednavatel se zavazuje uhradit IAESTE ceny dohodnuté v jednotlivých smlouvách uzavřených na základě
+			objednávky Objednatele a této rámcové smlouvy pro jednotlivé projekty nebo pro sjednané partnerství, a
+			to do 21 dnů od vystavení faktury za předmětný projekt. Případná neúčast Objednavatele na sjednaných
+			projektech IAESTE nemá vliv na povinnost Objednavatele zaplatit v plné výši sjednanou cenu a vícenáklady v
+			souladu s touto smlouvou a smlouvami uzavřenými na jejím základě. Na úhradu ceny není Objednatel oprávněn
+			jednostranně započítávat jakýkoliv nárok, a pokud by mu vznikl nějaký nárok na náhradu škody vůči IAESTE,
+			pak je omezen do výše zaplacené ceny projektu Objednatelem, není-li stanoveno v rámcové smlouvě jinak.
+			IAESTE má právo požadovat po Objednateli zálohu.
+		</li>
+		<li>
+			Pokud v důsledku nesplněním povinností Objednatele dle čl. IV bod 1 vzniknou IAESTE další nepředpokládatelné
+			náklady, je Objednatel povinen tyto náklady IAESTE uhradit. IAESTE bude o vzniku nákladů Objednatele předem
+			informovat, pokud to bude časově možné. IAESTE vzniklé vícenáklady vyúčtuje Objednateli fakturou se splatností 5 dní.
+		</li>
+		<li>
+			Jestliže bude IAESTE plátcem DPH budou na Objednatele vystavovány faktury včetně platné sazby DPH.
+			Uváděné ceny jsou bez DPH, pokud není stanoveno jinak.
+		</li>
+		<li>
+			IAESTE je oprávněno přerušit poskytování služeb na základě této rámcové smlouvy nebo jednotlivých smluv,
+			pokud Objednatel bude mít u IAESTE závazky po splatnosti. IAESTE neodpovídá za škody vzniklé Objednateli v 
+			důsledku přerušení poskytování služeb IAESTE.
+		</li>
+	</ol>
+
+	<h3 style="text-align:center">VI. Trvání smlouvy</h3>
+	<ol>
+		<li>Tato smlouva nabývá platnosti a účinnosti dnem, kdy bude podepsána oběma smluvními stranami.</li>
+		<li>Tato smlouva se uzavírá na dobu neurčitou.</li>
+		<li>
+			Závazkový vztah založený touto smlouvou může zaniknout těmito úkony:
+			<ol type="a">
+				<li>Písemnou dohodou smluvních stran.</li>
+				<li>
+					Písemnou výpovědí kterékoli smluvní strany v tříměsíční výpovědní lhůtě. Ta začne běžet prvním dnem
+					měsíce následujícího po doručení písemné výpovědi druhé straně nebo prvním dnem měsíce následujícího
+					poté, co bude písemná výpověď této smlouvy vrácena poštou jako nedoručena druhé straně zpět odesilateli.
+				</li>
+				<li>
+					Písemnou výpovědí IAESTE, pokud bude proti Objednavateli zahájeno insolvenční řízení či pokud se
+					Objednavatel dostane do platební neschopnosti vůči IAESTE delší jak 21 dní. V takovém případě
+					zanikne závazkový vztah založený touto smlouvou dnem doručení písemného oznámení IAESTE o výpovědi
+					této smlouvy Objednavateli, nebo dnem, který bude určen v takovémto písemném oznámení jako den ukončení této smlouvy.
+				</li>
+			</ol>
+		</li>
+		<li>
+			Samotným ukončením této smlouvy, ať už se tak stane jakýmkoli způsobem, zůstává nedotčeno právo IAESTE
+			vymáhat své nevyrovnané pohledávky za Objednavatelem včetně dosud nezaplacené ceny poskytnutých služeb,
+			vícenákladů a veškerého příslušenství, které vzniknou podle jednotlivých objednávek uzavřených před ukončením
+			této rámcové smlouvy, a IAESTE je oprávněno ponechat si platby přijaté v souladu s objednávkami uzavřenými před
+			ukončením této rámcové smlouvy. Samotným vypovězením rámcové smlouvy nejsou dotčeny závazky IAESTE vůči
+			Objednavateli vzniklé na základě objednávek uzavřených před ukončením této rámcové smlouvy.
+		</li>
+		<li>
+			Tato rámcová smlouva zůstává nedotčena pouhým odstoupením od jedné či více objednávek uzavřených na
+			základě této rámcové smlouvy. K ukončení této rámcové smlouvy v takovém případě však může vést
+			písemná výpověď učiněná v souladu s touto rámcovou smlouvou.
+		</li>
+	</ol>
+
+	<h3 style="text-align:center">VII. Společná a závěrečná ustanovení</h3>
+	<ol>
+		<li>Strany sjednávají pro případné spory mezi nimi jako místně příslušný soud, dle sídla IAESTE.</li>
+		<li>
+			Stane-li se některé ustanovení této smlouvy neplatné či neúčinné, zůstávají ostatní ustanovení této smlouvy
+			platná a účinná. Namísto neplatného či neúčinného ustanovení se použijí ustanovení obecně závazných právních
+			předpisů upravujících danou otázku vzájemného vztahu smluvních stran. Strany smluvní se v takovém případě
+			zavazují nahradit neplatné ustanovení novým ujednáním, které nejlépe odpovídá záměru ustanovení neplatné či neúčinného.
+		</li>
+		<li>
+			Tato smlouva nahrazuje veškerá předchozí písemná či ústní ujednání stran smluvních týkajících se
+			předmětu této smlouvy. Případné změny a dodatky k této smlouvě je možno činit pouze po vzájemné
+			dohodě stran smluvních v písemně formou postupně číslovaných dodatků.
+		</li>
+		<li>
+			Veškerá oznámení, žádosti či jiná sdělení dle této smlouvy vyžadují písemnou formu a musí být
+			doručeny buď osobně, elektronicky nebo doporučeně poštou na adresu v záhlaví smlouvy nebo na
+			jinou adresu, která byla včas sdělena druhé straně. Doručením se rozumí v případě (i) osobního
+			doručení okamžik předání druhé straně (pokud by odmítla převzít příslušný dokument, má se za to,
+			že je doručeno okamžikem předání osobě, která byla pověřena příslušný dokument doručit) a (ii)
+			doručení poštou třetím pracovním dnem po odeslání poštou.
+		</li>
+		<li>
+			Tato smlouva je vypracována ve čtyřech stejnopisech, z nichž každý má platnost originálu.
+			Obě smluvní strany obdrží dva stejnopisy.
+		</li>
+		<li>
+			Všechny spory mezi smluvními stranami, vzniklé z právních vztahů založených touto Rámcovou smlouvou nebo
+			v souvislosti s ní nebo kteroukoli Objednávkou založenou na jejím základě nebo v souvislosti s ní
+			budou řešeny jednáním při vynaložení veškerého úsilí ke smírnému řešení.
+		</li>
+	</ol>
+
+	<p>V ...................................................... dne: ......................</p>
+
+	<p>za Objednavatele</p>
+
+	<p>Dodavatel potvrzuje odsouhlasení a přijetí výše uvedené objednávky:</p>
+
+	<p>V ...................................................... dne: ......................</p>
+
+	<p>za Dodavatele</p>
+
+	<p>Příloha: Nároky kladené na grafické podklady zaslané Objednatelem.</p>
+
+</div>
+</body>
+</html>

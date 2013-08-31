@@ -1,0 +1,51 @@
+{#content}
+{include 'steps.latte'}
+
+{snippet invoicing}
+	{form invoiceForm}
+		<ul class="error" n:if="$form->allErrors">
+			<li n:foreach="$form->allErrors as $error">{$error}</li>
+		</ul>
+		<div class="row-fluid">
+			<div class="span6">
+				{label company_name /}
+				{input company_name, class => span12}
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span6">
+				{label seat /}
+				{input seat, class => span12}
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span6">
+				{label IC /}
+				{input IC, class => span12}
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span6">
+				{label DIC /}
+				{input DIC, class => span12}
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span6">
+				{label account /}
+				{input account, class => span12}
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span6">
+				{label represented_by /}
+				{input represented_by, class => span12}
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span6">
+				{input send, class => "span12 btn btn-primary btn-large"}
+			</div>
+		</div>
+	{/form}
+{/snippet}

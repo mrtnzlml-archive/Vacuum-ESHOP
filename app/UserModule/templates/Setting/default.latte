@@ -1,0 +1,76 @@
+{#content}
+<h2 n:block="title">Nastavení osobních údajů</h2>
+<p>Následující informace budou použity při objednávce a na rámcové smlouvě.</p>
+
+{snippet form}
+	{form userInfo}
+		<ul class="error" n:if="$form->allErrors">
+			<li n:foreach="$form->allErrors as $error">{$error}</li>
+		</ul>
+		<div class="row-fluid">
+			<div class="span6">
+				{label username /}
+				{input username, class => span12}
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span6">
+				{label company_name /}
+				{input company_name, class => span12}
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span6">
+				{label seat /}
+				{input seat, class => span12}
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span6">
+				{label email /}
+				{input email, class => span12}
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span6">
+				{label tel /}
+				{input tel, class => span12}
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span6">
+				{label web /}
+				{input web, class => span12}
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span6">
+				{label IC /}
+				{input IC, class => span12}
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span6">
+				{label DIC /}
+				{input DIC, class => span12}
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span6">
+				{label account /}
+				{input account, class => span12}
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span6">
+				{label represented_by /}
+				{input represented_by, class => span12}
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span6">
+				{input save, class => "span12 btn btn-success"}
+			</div>
+		</div>
+	{/form}
+{/snippet}

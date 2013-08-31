@@ -1,0 +1,53 @@
+{#content}
+{include 'steps.latte'}
+
+<div class="row-fluid">
+	<div class="span6">
+		<address>
+			<u>Dodavatel:</u><br>
+			<strong>Lokální centrum: {ifset $lc->name}{$lc->name}{/ifset}</strong><br>
+			se sídlem {ifset $lc->seat}{$lc->seat}{/ifset}<br>
+			IČ: {ifset $lc->IC}{$lc->IC}{/ifset}<br>
+			DIČ: {ifset $lc->DIC}{$lc->DIC}{/ifset}<br>
+			číslo účtu: {ifset $lc->account}{$lc->account}{/ifset}<br>
+			zastoupené: {ifset $lc->represented_by}{$lc->represented_by}{/ifset}<br>
+		</address>
+	</div>
+	<div class="span6">
+		<address>
+			<u>Objednavatel:</u> (<a n:href=":Front:Basket:invoicing">Upravit</a>)<br>
+			<strong>Název společnosti: {ifset $client['company_name']}{$client['company_name']}{/ifset}</strong><br>
+			se sídlem {ifset $client['seat']}{$client['seat']}{/ifset}<br>
+			IČ: {ifset $client['IC']}{$client['IC']}{/ifset}<br>
+			DIČ: {ifset $client['DIC']}{$client['DIC']}{/ifset}<br>
+			číslo účtu: {ifset $client['account']}{$client['account']}{/ifset}<br>
+			zastoupené: {ifset $client['represented_by']}{$client['represented_by']}{/ifset}<br>
+		</address>
+	</div>
+</div>
+
+<a n:href=":Front:Basket:summary">Upravit košík</a>
+
+<table class="table table-striped table-hover">
+	<thead>
+		<tr>
+			<th>Popis projektu</th>
+			<th>Cena bez DPH</th>
+			<th>Množství</th>
+			<th>Cena celkem bez DPH</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr n:foreach="$items as $item">
+			{var $product = $productsRepository->getById($item['product_id'])->fetch()}
+			<td>{$product->name}</td>
+			<td>{$item['price']|money}</td>
+			<td>{$item['count']|money}</td>
+			<td>{$item['price'] * $item['count']|money}</td>
+		</tr>
+	</tbody>
+</table>
+
+{form finish}
+	{input send, class => "span12 btn btn-primary btn-large"}
+{/form}

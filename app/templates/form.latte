@@ -1,0 +1,30 @@
+{form $form}
+
+	<ul class="error" n:if="$form->allErrors">
+		<li n:foreach="$form->allErrors as $error">{$error}</li>
+	</ul>
+
+	<div class="row-fluid">
+		{foreach $form->controls as $input}
+			{if $input instanceof \Nette\Forms\Controls\Checkbox}
+				<div class="controls controls-row">
+					{input $input, class => 'span1'}
+					{label $input, class => 'span10', style => 'padding-top:4px;' /}
+				</div>
+			{elseif $input instanceof \Nette\Forms\Controls\Button}
+				<div class="controls">
+					{input $input, class => 'btn span12'}
+				</div>
+			{else}
+				<div class="controls">
+					{label $input, class => 'span9', style => 'min-height:20px;' /}
+					<span class="required span3 text-right" n:if="$input->required ? required" style="min-height:20px;">(Povinné)</span>
+				</div>
+				<div class="controls">
+					{input $input, class => 'span12'}
+				</div>
+			{/if}
+		{/foreach}
+	</div>
+
+{/form}

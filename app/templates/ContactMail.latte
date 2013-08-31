@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+
+<h1>Zájemce o produkt {ifset $product}{$product->name}{/ifset}</h1>
+
+<p>
+	Dobrý den,<br>
+	uživatel <strong>{ifset $user}{$user->username}{/ifset} ({ifset $user}{$user->company_name}{/ifset})</strong> má zájem o
+	produkt <strong>{ifset $product}{$product->name}{/ifset}</strong>.
+</p>
+
+<p>Kontaktujte jej prosím co nejdříve to bude možné.</p>
+
+<address>
+	<u>Kontaktní informace:</u><br>
+	<strong>{ifset $user}{$user->company_name}{/ifset}</strong><br>
+	se sídlem {ifset $user}{$user->seat}{/ifset}<br>
+	IČ: {ifset $user}{$user->IC}{/ifset}<br>
+	DIČ: {ifset $user}{$user->DIC}{/ifset}<br>
+	Tel: {ifset $user}{$user->tel}{/ifset}<br>
+	Email: {ifset $user}{$user->email}{/ifset}<br>
+	Web: {ifset $user}{$user->web}{/ifset}
+</address>

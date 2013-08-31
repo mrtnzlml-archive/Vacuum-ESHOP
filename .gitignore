@@ -1,0 +1,17 @@
+www/uploads/*
+log/*
+temp/*
+libs/*
+.idea/*
+
+composer.lock
+
+.DS_Store
+!.gitignore
+!.htaccess
+!web.config
+!AntispamControl.php
+!Basket.php
+!qqFileUploader.php
+!Mailer.php
+app/config/config.local.neon

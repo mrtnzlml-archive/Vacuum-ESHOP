@@ -1,0 +1,71 @@
+#
+# SECURITY WARNING: it is CRITICAL that this file & directory are NOT accessible directly via a web browser!
+#
+# If you don't protect this directory from direct web access, anybody will be able to see your passwords.
+# http://nette.org/security-warning
+#
+parameters:
+
+php:
+	date.timezone: Europe/Prague
+	# zlib.output_compression: yes
+
+nette:
+	application:
+		errorPresenter: Front:Error
+		mapping:
+			*: App\*Module\*Presenter
+
+	session:
+		expiration: 14 days
+		debugger: true
+
+
+services:
+	authenticator:
+		create: Model\Authenticator
+	authorizator:
+		class: Nette\Security\Permission
+		setup:
+			- addRole('guest')
+			- addRole('waiting', 'guest')
+			- addRole('approved', 'waiting')
+			- addRole('moderator', 'approved')
+			- addRole('admin', 'moderator')
+
+			- addResource('price')
+			- addResource('Front:Basket')
+			- addResource('Admin:Categories')
+			- addResource('Admin:Lc')
+			- addResource('Admin:Orders')
+			- addResource('Admin:Product')
+			- addResource('Admin:Settings')
+			- addResource('Admin:Users')
+			- addResource('Admin:Variants')
+
+			- allow('approved', 'price', 'view')
+			- allow('approved', 'Front:Basket')
+			- allow('moderator', 'Admin:Orders')
+			- allow('moderator', 'Admin:Product')
+			- allow('moderator', 'Admin:Users')
+			- allow('moderator', 'Admin:Variants')
+
+			- allow('admin')
+
+	routerFactory: App\RouterFactory
+	router: @routerFactory::createRouter
+
+	- Basket
+
+	#- Fresh\Mailer([host: 'fresh-hosting.cz', username: %mailer_user%, password: %mailer_pass%, secure: ''])
+	- Fresh\Mailer([host: 'smtp.gmail.com', username: %mailer_user%, password: %mailer_pass%, secure: 'ssl'])
+
+	- Model\CategoryRepository
+	- Model\LcRepository
+	- Model\OrdersRepository
+	- Model\ProductRepository
+	- Model\SettingsRepository
+	- Model\UserRepository
+	- Model\VariantsRepository
+
+factories:
