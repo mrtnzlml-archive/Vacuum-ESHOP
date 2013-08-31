@@ -1,30 +1,12 @@
 {block |strip|trim}
 <!DOCTYPE html>
 <html lang="cs" dir="ltr">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="robots" content="{$robots}" n:ifset="$robots">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="author" content="Martin Zlámal">
-
-		<title>
-			{$setting->title_prefix}
-			{$setting->title_separator}
-			{#title|striptags}Vacuum eShop Skeleton{/#}
-			{$setting->title_sufix}
-		</title>
-
-		<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/bootstrap.min.css">
-		<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/screen.css">
-		<link rel="stylesheet" media="print" href="{$basePath}/css/print.css">
-		<link rel="shortcut icon" href="{$basePath}/favicon.ico">
-		{block head}{/block}
-	</head>
-
+	{include '../../templates/layout/head.latte'}
 	<body>
 		<script> document.body.className+=' js' </script>
+		{include '../../templates/layout/header.latte'}
 
-		<div id="header">
+		{*<div id="header">
 			<div class="basket">
 				{if $user->isAllowed('price', 'view')}
 					{snippet basket}
@@ -32,58 +14,61 @@
 					{/snippet}
 				{/if}
 			</div>
-		</div>
+		</div>*}
 
-		<div id="menu">
+		<div class="container hidden-print main-nav" style="background:transparent;padding:0">
 			{var $category_id = NULL}
 			{#menu}
-				<ul>
-					<li n:class="$presenter->isLinkCurrent(':Front:Product:default') ? active">
-						<a n:href=":Front:Product:default">vše</a>
-					</li>
-					{foreach $categories as $category}
-						{if $category->parent == $category_id}
-							{if $setting->show_empty_in_menu}
-								<li{ifCurrent :Front:Product:category, $category->slug} class="active"{/ifCurrent}>
-									<a n:href=":Front:Product:category $category->slug">
-										{$category->name}
-										{if $setting->show_numbers_in_menu}
-											({count($productsRepository->getByCategoryId($category->id))})
-										{/if}
-									</a>
-									{*include #menu, category_id => $category->id*}{*RECURSIVE FEATURE*}
-								</li>
-							{elseif count($productsRepository->getByCategoryId($category->id)) !== 0}
-								<li{ifCurrent :Front:Product:category, $category->slug} class="active"{/ifCurrent}>
-									<a n:href=":Front:Product:category $category->slug">
-										{$category->name}
-										{if $setting->show_numbers_in_menu}
-											({count($productsRepository->getByCategoryId($category->id))})
-										{/if}
-									</a>
-									{*include #menu, category_id => $category->id*}{*RECURSIVE FEATURE*}
-								</li>
-							{/if}
+			<ul class="nav nav-pills">
+				{*<li n:class="$presenter->isLinkCurrent(':Front:Product:default') ? active">
+					<a n:href=":Front:Product:default">vše</a>
+				</li>*}
+				{foreach $categories as $category}
+					{if $category->parent == $category_id}
+						{if $setting->show_empty_in_menu}
+							<li{ifCurrent :Front:Product:category, $category->slug} class="active"{/ifCurrent}>
+								<a n:href=":Front:Product:category $category->slug">
+									{$category->name}
+									{if $setting->show_numbers_in_menu}
+										({count($productsRepository->getByCategoryId($category->id))})
+									{/if}
+								</a>
+								{include #menu, category_id => $category->id}
+							</li>
+						{elseif count($productsRepository->getByCategoryId($category->id)) !== 0}
+							<li{ifCurrent :Front:Product:category, $category->slug} class="active"{/ifCurrent}>
+								<a n:href=":Front:Product:category $category->slug">
+									{$category->name}
+									{if $setting->show_numbers_in_menu}
+										({count($productsRepository->getByCategoryId($category->id))})
+									{/if}
+								</a>
+								{include #menu, category_id => $category->id}
+							</li>
 						{/if}
-					{/foreach}
-					<li style="float:right" n:if="$user->isLoggedIn()">
-						<a n:href=":User:Setting:default">Uživatelské rozhraní</a>
-					</li>
-				</ul>
+					{/if}
+				{/foreach}
+				{*<li style="float:right" n:if="$user->isLoggedIn()">
+					<a n:href=":User:Setting:default">Uživatelské rozhraní</a>
+				</li>*}
+			</ul>
 			{/#}
 		</div>
 
-		<div id="main">
-			<div class="inner">
-				<div n:foreach="$flashes as $flash" class="alert {$flash->type}">{$flash->message}</div>
-				{include #content}
-			</div>
+
+		<div class="container shadow" style="padding: 20px 30px;">
+			<div n:foreach="$flashes as $flash" class="alert {$flash->type}">{$flash->message}</div>
+			{include #content}
 		</div>
 
-		<div id="footer"></div>
+		<div class="container text-right hidden-print footer" style="background:transparent">
+			&copy; 2012 - <?php echo date("Y"); ?>&nbsp;<a n:href="Homepage:">Martin Zlámal</a> <span class="glyphicon glyphicon-qrcode"></span> | {if $user->isLoggedIn()}<a href="{link :Auth:Sign:out}">Odhlásit</a>{else}<a n:href=":Auth:Sign:in" data-toggle="modal">Login</a>{/if}<br>
+			<a href="http://www.fresh-hosting.cz/" target="_blank">www.fresh-hosting.cz</a> | <a href="https://bitbucket.org/mrtnzlml/www.zeminem.cz/issues" target="_blank">Našli jste chybu?</a>
+		</div>
 
 		{#scripts}
 		<script src="{$basePath}/js/jquery.js"></script>
+		<script src="{$basePath}/js/jquery.qrcode-0.6.0.js"></script>
 		<script src="{$basePath}/js/holder.js"></script>
 		<script src="{$basePath}/js/netteForms.js"></script>
 		<script src="{$basePath}/js/nette.ajax.js"></script>

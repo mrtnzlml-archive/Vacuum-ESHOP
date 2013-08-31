@@ -5,41 +5,60 @@
 	{/snippet}
 {/if}
 
-<h1 n:block="title">Přehled všech kategorií</h1>
-<p>Kategorie tvoří menu a jsou společné pro všechny lokální centra.</p>
-{snippet grid}
-	{control datagrid}
-{/snippet}
+<h2 n:block="title">Přehled všech kategorií <small><a class="scroll">Vytvořit novou kategorii</a></small></h2>
+{if !$empty}
+	{snippet grid}
+		{control datagrid}
+	{/snippet}
+{else}
+	<p>Zatím nejsou vytvořeny žádné kategorie.</p>
+{/if}
 
-<h2>Editační formulář</h2>
+<hr>
+
+<h2 id="scroll">Editační formulář</h2>
+{snippet flashes2}
+	<div n:foreach="$flashes as $flash" class="alert {$flash->type}">{$flash->message}</div>
+{/snippet}
 {snippet form}
-	{form addForm}
-		<ul class="error" n:if="$form->allErrors">
-			<li n:foreach="$form->allErrors as $error">{$error}</li>
+	{form form}
+		<ul class="error" n:if="$form->errors">
+			<li n:foreach="$form->errors as $error">{$error}</li>
 		</ul>
-		<div class="row-fluid">
-			<div class="span4">
+		<div class="form-group row">
+			<div class="col-lg-6">
 				{label name /}
-				{input name, class => span12}
+				{input name, class => form-control}
 			</div>
-			<div class="span4">
+			<div class="col-lg-6">
 				{label slug /}
-				{input slug, class => span12}
+				{input slug, class => form-control}
 			</div>
 		</div>
-		<div class="row-fluid">
-			<div class="span4">
+		<div class="form-group row">
+			<div class="col-lg-6">
+				{label parent /}
+				{input parent, class => form-control}
+			</div>
+			<div class="col-lg-6">
 				{label priority /}
-				{input priority, class => span12}
+				{input priority, class => form-control}
 			</div>
 		</div>
-		<div class="row-fluid">
-			<div class="span4">
-				{input insert, class => "span12 btn btn-success"}
+		<div class="form-group row">
+			<div class="col-lg-3">
+				{input insert, class => "col-lg-12 btn btn-success"}
 			</div>
-			<div class="span4">
-				{input update, class => "span12 btn btn-warning"}
+			{if !isset($selected)}<div style="display:none">{/if}
+			<div class="col-lg-3">
+				{input update, class => "col-lg-12 btn btn-warning"}
 			</div>
+			{if !isset($selected)}</div>{/if}
 		</div>
 	{/form}
 {/snippet}
+
+<hr>
+
+<h2>Nápověda</h2>
+<p>Chcete-li editovat kategorii, klikněte na její název a aktualizujte ji.</p>

@@ -1,9 +1,21 @@
 $(function () {
 
-	// Disable all update buttons before edit
-	$('input[name="update"]').attr({
-		'disabled': 'disabled'
+	$('#qr').qrcode({
+		text: document.URL,
+		radius: 0.5,
+		size: 107
 	});
+
+	$(".scroll").click(function() {
+		$('html, body').animate({
+			scrollTop: $("#scroll").offset().top
+		}, 1000);
+	});
+
+	// Disable all update buttons before edit
+	/*$('input[name="update"]').attr({
+		'disabled': 'disabled'
+	});*/
 
 	if ($.nette != undefined) {
 		if ($('#image-uploader').length != 0) {

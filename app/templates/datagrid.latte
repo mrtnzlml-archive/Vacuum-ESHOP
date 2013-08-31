@@ -12,7 +12,7 @@
 {/define}
 
 {define col-filter}
-	{input $column->name, class => grid-input}
+	{input $column->name, class => 'grid-input form-control'}
 {/define}
 
 {define row-edit-actions}
@@ -32,8 +32,8 @@
 
 {define pagination}
 {if $paginator->pageCount > 1}
-	<div class="pagination pagination-centered">
-		<ul>
+	<div class="text-center">
+		<ul class="pagination">
 			<?php
 				$page = $paginator->getPage();
 				if ($paginator->pageCount < 2) {
@@ -80,7 +80,7 @@
 
 {define col-name}
 	<td>
-		<a href="{plink edit! id => $row->id}" class="ajax">{$cell}</a>
+		<a href="{plink edit! id => $row->id}" class="ajax scroll">{$cell}</a>
 	</td>
 {/define}
 
@@ -98,16 +98,6 @@
 <td>
 	{$row->category->name}
 </td>
-{/define}
-
-{define col-lc}
-	<td>
-		{if $row->lc != NULL}
-			{$row->ref('lc')->name}
-		{else}
-			---
-		{/if}
-	</td>
 {/define}
 
 {define col-active}

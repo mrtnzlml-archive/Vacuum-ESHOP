@@ -1,30 +1,29 @@
-{form $form}
+{form $form, role => 'form'}
 
-	<ul class="error" n:if="$form->allErrors">
-		<li n:foreach="$form->allErrors as $error">{$error}</li>
+	<ul class="error" n:if="$form->errors">
+		<li n:foreach="$form->errors as $error">{$error}</li>
 	</ul>
 
-	<div class="row-fluid">
-		{foreach $form->controls as $input}
-			{if $input instanceof \Nette\Forms\Controls\Checkbox}
-				<div class="controls controls-row">
-					{input $input, class => 'span1'}
-					{label $input, class => 'span10', style => 'padding-top:4px;' /}
+	{foreach $form->controls as $input}
+		{if $input->controlPrototype->type === checkbox}
+			<div class="checkbox">
+				{input $input, class => 'form-control'}
+				{label $input /}
+			</div>
+		{else}
+			<div class="form-group">
+				<div class="row">
+					{label $input, class => 'col-lg-6' /}
+					<span class="required text-right col-lg-6" n:if="$input->required?required">(Povinné)</span>
 				</div>
-			{elseif $input instanceof \Nette\Forms\Controls\Button}
-				<div class="controls">
-					{input $input, class => 'btn span12'}
-				</div>
-			{else}
-				<div class="controls">
-					{label $input, class => 'span9', style => 'min-height:20px;' /}
-					<span class="required span3 text-right" n:if="$input->required ? required" style="min-height:20px;">(Povinné)</span>
-				</div>
-				<div class="controls">
-					{input $input, class => 'span12'}
-				</div>
-			{/if}
-		{/foreach}
-	</div>
+
+				{if $input->controlPrototype->type === submit}
+					{input $input, class => 'form-control btn btn-default'}
+				{else}
+					{input $input, class => 'form-control'}
+				{/if}
+			</div>
+		{/if}
+	{/foreach}
 
 {/form}

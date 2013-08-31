@@ -50,7 +50,7 @@ class ProductPresenter extends BasePresenter {
 			$form->addText('price');
 			$form->addText('event_date');
 			$categories = array();
-			foreach ($this->categories->getAll() as $item) {
+			foreach ($this->categories->read() as $item) {
 				$categories[$item->id] = $item->name;
 			}
 			$form->addSelect('category_id', NULL, $categories)->setPrompt('---');
@@ -116,7 +116,7 @@ class ProductPresenter extends BasePresenter {
 		$form->addText('dph', "Výsledná cena s DPH ($dph%):")->setDisabled();
 
 		$categories = array();
-		foreach ($this->categories->getAll() as $item) {
+		foreach ($this->categories->read() as $item) {
 			$categories[$item->id] = $item->name;
 		}
 		$form->addSelect('category', 'Kategorie:', $categories);

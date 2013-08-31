@@ -14,6 +14,12 @@ CREATE TABLE `categories` (
 	UNIQUE KEY `slug` (`slug`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+INSERT INTO `categories` (`id`, `name`, `slug`, `priority`, `parent`) VALUES
+(1,	'Kategorie 1',	'kategorie-1',	'0', NULL),
+(2,	'Subkategorie 1',	'subkategorie-1',	'0', '1'),
+(3,	'Subkategorie 2',	'subkategorie-2',	'0', '1'),
+(4,	'Kategorie 2',	'kategorie-2',	'0', NULL);
+
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

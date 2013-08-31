@@ -1,9 +1,9 @@
 {#content}
-<div class="row-fluid">
+<div class="row">
 	{if count($products) === 0}
 		<div class="alert alert-error">Momentálně nejsou žádné produkty v této kategorii k prodeji.</div>
 	{/if}
-	<div class="span4 product" n:foreach="$products as $product">
+	<div class="col-lg-4 product" n:foreach="$products as $product">
 		{var $picture = $productsRepository->getPromotedPicture($product->id)}
 		{if $picture}
 			<div style="height:210px">

@@ -5,11 +5,8 @@
 	{/snippet}
 {/if}
 
-<h1 n:block="title">Přehled všech produktů</h1>
-<p>
-	Produkty se přiřazují konkrétnímu lokálnímu centru podle moderátora.
-	Moderátor nemůže vidět produkty jiných lokálních center.
-</p>
+<h2 n:block="title">Přehled všech produktů</h2>
+
 {snippet grid}
 	{control datagrid}
 	<script>
@@ -26,7 +23,7 @@
 	</script>
 {/snippet}
 
-<h2>Editační formulář</h2>
+<h2 id="scroll">Editační formulář</h2>
 <p>
 	Produkt je vhodné nejdříve vytvořit jako neaktivní, upravit jeho parametry,
 	obrázky a varianty a následně změnit jeho status na aktivní.

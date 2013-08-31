@@ -13,8 +13,6 @@ class UsersPresenter extends BasePresenter {
 
 	/** @var \Model\UserRepository @inject */
 	public $users;
-	/** @var \Model\LcRepository @inject */
-	public $lc;
 	/** @var \Fresh\Mailer @inject */
 	public $smtp;
 
@@ -45,9 +43,6 @@ class UsersPresenter extends BasePresenter {
 		$grid->addColumn('email', 'Email')->enableSort();
 		$grid->addColumn('tel', 'Telefon')->enableSort();
 		$grid->addColumn('web', 'Web')->enableSort();
-		if ($this->user->isInRole('admin')) {
-			$grid->addColumn('lc', 'LC')->enableSort();
-		}
 
 		$grid->setRowPrimaryKey('id');
 		$grid->setDataSourceCallback($this->getDataSource);
@@ -68,14 +63,6 @@ class UsersPresenter extends BasePresenter {
 			$form->addText('email');
 			$form->addText('tel');
 			$form->addText('web');
-
-			if ($this->user->isInRole('admin')) {
-				$lc = array();
-				foreach ($this->lc->getAll() as $value) {
-					$lc[$value->id] = $value->name;
-				}
-				$form->addSelect('lc', 'LC:', $lc)->setPrompt('---');
-			}
 
 			return $form;
 		});
@@ -188,11 +175,6 @@ class UsersPresenter extends BasePresenter {
 		$form->addText('tel', 'Telefon:');
 		$form->addText('web', 'Web:')
 			->setDefaultValue('http://');
-		$lc = array();
-		foreach ($this->lc->getAll() as $value) {
-			$lc[$value->id] = $value->name;
-		}
-		$form->addSelect('lc', 'LC:', $lc)->setPrompt('---');
 		$form->addHidden('user_id', NULL);
 		$form->addHidden('user_pass_hash', NULL);
 		$form->addSubmit('insert', 'Přidat nového uživatele')

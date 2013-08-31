@@ -21,6 +21,18 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
 	public $products;
 	protected $setting;
 
+	public function createComponentCss() {
+		$files = new \WebLoader\FileCollection(WWW_DIR . '/css');
+		$files->addFiles(array(
+			'bootstrap.min.css',
+			'screen.less',
+		));
+		$compiler = \WebLoader\Compiler::createCssCompiler($files, WWW_DIR . '/webtemp');
+		//$compiler->setOutputNamingConvention(\ZeminemOutputNamingConvention::createCssConvention());
+		$compiler->addFileFilter(new \Webloader\Filter\LessFilter());
+		return new \WebLoader\Nette\CssLoader($compiler, $this->template->basePath . '/webtemp');
+	}
+
 	public function startup() {
 		parent::startup();
 		\AntispamControl::register();
@@ -30,7 +42,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
 		$this->template->basket = $this->basket;
 		$this->setting = $this->settings->getAllValues();
 		$this->template->setting = $this->setting;
-		$this->template->categories = iterator_to_array($this->categories->getAll()->order('priority DESC, name ASC'));
+		$this->template->categories = iterator_to_array($this->categories->read()->order('priority DESC, name ASC'));
 		$this->template->productsRepository = $this->products;
 
 		parent::beforeRender();

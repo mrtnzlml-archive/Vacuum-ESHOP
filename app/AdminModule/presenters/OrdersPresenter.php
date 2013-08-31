@@ -13,8 +13,6 @@ class OrdersPresenter extends BasePresenter {
 
 	/** @var \Model\OrdersRepository @inject */
 	public $orders;
-	/** @var \Model\LcRepository @inject */
-	public $lc;
 	/** @var \Model\VariantsRepository @inject */
 	public $variants;
 
@@ -31,9 +29,6 @@ class OrdersPresenter extends BasePresenter {
 		$grid->addColumn('account', 'Číslo účtu')->enableSort();
 		$grid->addColumn('represented_by', 'Zastupující osoba')->enableSort();
 		$grid->addColumn('total', 'Cena bez DPH')->enableSort();
-		if ($this->user->isInRole('admin')) {
-			$grid->addColumn('lc', 'LC')->enableSort();
-		}
 
 		$grid->setRowPrimaryKey('id');
 		$grid->setDataSourceCallback($this->getDataSource);
@@ -52,13 +47,6 @@ class OrdersPresenter extends BasePresenter {
 			$form->addText('account');
 			$form->addText('represented_by');
 			$form->addText('total');
-			if ($this->user->isInRole('admin')) {
-				$lc = array();
-				foreach ($this->lc->getAll() as $value) {
-					$lc[$value->id] = $value->name;
-				}
-				$form->addSelect('lc', 'LC:', $lc)->setPrompt('---');
-			}
 			return $form;
 		});
 

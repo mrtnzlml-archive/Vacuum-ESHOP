@@ -11,9 +11,7 @@ try {
 	$container->application->run();
 } catch (\PDOException $exc) {
 	if ($exc->getCode() === 1049) { // Unknown database
-		dump('create database');
-		//$container = require __DIR__ . '/../app/bootstrap.nodb.php';
-		//$container->application->run();
+		require '.install.php';
 	} else {
 		throw $exc;
 	}

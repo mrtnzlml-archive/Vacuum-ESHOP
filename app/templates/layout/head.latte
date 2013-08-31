@@ -1,0 +1,18 @@
+<head>
+	<meta charset="UTF-8">
+	<meta name="robots" content="{$robots}" n:ifset="$robots">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="Martin Zlámal">
+
+	<title>
+		{$setting->title_prefix}
+		{$setting->title_separator}
+		{#title|striptags}Vacuum eShop Skeleton{/#}
+		{$setting->title_sufix}
+	</title>
+
+	{control css}
+	<link rel="stylesheet" media="print" href="{$basePath}/css/print.css">
+	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
+	{block head}{/block}
+</head>

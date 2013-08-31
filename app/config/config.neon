@@ -61,7 +61,6 @@ services:
 	- Fresh\Mailer([host: 'smtp.gmail.com', username: %mailer_user%, password: %mailer_pass%, secure: 'ssl'])
 
 	- Model\CategoryRepository
-	- Model\LcRepository
 	- Model\OrdersRepository
 	- Model\ProductRepository
 	- Model\SettingsRepository

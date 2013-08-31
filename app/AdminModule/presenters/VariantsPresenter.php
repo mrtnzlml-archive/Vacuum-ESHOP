@@ -13,8 +13,6 @@ class VariantsPresenter extends BasePresenter {
 
 	/** @var \Model\VariantsRepository @inject */
 	public $variants;
-	/** @var \Model\LcRepository @inject */
-	public $lc;
 
 	/**
 	 * @return \Nextras\Datagrid\Datagrid
@@ -22,9 +20,6 @@ class VariantsPresenter extends BasePresenter {
 	public function createComponentDatagrid() {
 		$grid = new \Nextras\Datagrid\Datagrid;
 		$grid->addColumn('name', 'Název')->enableSort();
-		if ($this->user->isInRole('admin')) {
-			$grid->addColumn('lc', 'LC')->enableSort();
-		}
 
 		$grid->setRowPrimaryKey('id');
 		$grid->setDataSourceCallback($this->getDataSource);
@@ -33,13 +28,6 @@ class VariantsPresenter extends BasePresenter {
 		$grid->setFilterFormFactory(function () {
 			$form = new Nette\Forms\Container;
 			$form->addText('name');
-			if ($this->user->isInRole('admin')) {
-				$lc = array();
-				foreach ($this->lc->getAll() as $value) {
-					$lc[$value->id] = $value->name;
-				}
-				$form->addSelect('lc', 'LC:', $lc)->setPrompt('---');
-			}
 			return $form;
 		});
 
@@ -82,12 +70,6 @@ class VariantsPresenter extends BasePresenter {
 		$form->addText('name', 'Název varianty:')
 			->setRequired();
 
-		$lc = array();
-		foreach ($this->lc->getAll() as $value) {
-			$lc[$value->id] = $value->name;
-		}
-		$form->addSelect('lc', 'Přiřadit LC:', $lc)->setPrompt('Nepřiřazovat (viditelné pouze pro adminy)');
-
 		$form->addSubmit('save', 'Vytvořit novou variantu');
 		$form->onSuccess[] = $this->variantsSucceeded;
 		return $form;
@@ -101,7 +83,6 @@ class VariantsPresenter extends BasePresenter {
 		try {
 			$data = array(
 				'name' => $vals->name,
-				'lc' => $this->user->isInRole('admin') ? $vals->lc : $this->user->identity->lc,
 			);
 			$this->variants->newVariant($data);
 		} catch(\Exception $exc) {

@@ -1,28 +1,19 @@
 <?php
 
-namespace App\AuthModule;
+namespace Base;
+
 use Model;
 use Nette;
+use Nette\Image;
 
 /**
  * Base presenter for all application presenters.
  */
-abstract class BasePresenter extends Nette\Application\UI\Presenter {
+abstract class BaseBasePresenter extends Nette\Application\UI\Presenter {
 
-	/** @var \Model\SettingsRepository @inject */
-	public $settings;
-
-	public function beforeRender() {
-		$this->template->setting = $this->settings->getAllValues();
-	}
-
-	public function renderIn() {
-		parent::startup();
-		if ($this->user->isLoggedIn()) {
-			$this->redirect(':Front:Product:default');
-		}
-	}
-
+	/**
+	 * @return \WebLoader\Nette\CssLoader
+	 */
 	public function createComponentCss() {
 		$files = new \WebLoader\FileCollection(WWW_DIR . '/css');
 		$files->addFiles(array(
@@ -33,6 +24,21 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
 		//$compiler->setOutputNamingConvention(\ZeminemOutputNamingConvention::createCssConvention());
 		$compiler->addFileFilter(new \Webloader\Filter\LessFilter());
 		return new \WebLoader\Nette\CssLoader($compiler, $this->template->basePath . '/webtemp');
+	}
+
+	public function beforeRender() {
+		parent::beforeRender();
+
+		// modifikator {...|money}
+		$this->template->registerHelper('money', function ($value) {
+			return str_replace(' ', ' ', number_format($value, 0, ',', ' ') . ' Kč');
+		});
+
+		// modifikator {...|dph}
+		$this->template->registerHelper('dph', function($value) {
+			$dph = $this->setting->dph;
+			return $value * (1 + $dph/100);
+		});
 	}
 
 }

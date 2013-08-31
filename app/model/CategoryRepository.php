@@ -14,54 +14,55 @@ class CategoryRepository extends Nette\Object {
 	public $sf;
 
 	/**
-	 * @return Nette\Database\Table\Selection
-	 */
-	public function getAll() {
-		return $this->sf->table('categories');
-	}
-
-	/**
-	 * @param $id
-	 * @return Nette\Database\Table\Selection
-	 */
-	public function getById($id) {
-		return $this->sf->table('categories')->where('id = ?', $id);
-	}
-
-	/**
 	 * @param $name
 	 * @param null $slug
 	 * @param int $priority
+	 * @param null $parent
 	 */
-	public function add($name, $slug = NULL, $priority = 0) {
+	public function create($name, $slug = NULL, $priority = 0, $parent = NULL) {
 		$slug = Nette\Utils\Strings::webalize($slug ? : $name);
 		$this->sf->table('categories')->insert(array(
 			'name' => $name,
 			'slug' => $slug,
 			'priority' => $priority,
+			'parent' => $parent,
 		));
 	}
 
 	/**
-	 * @param $id
+	 * @param null $category_id
+	 * @return Nette\Database\Table\Selection
+	 */
+	public function read($category_id = NULL) {
+		if ($category_id === NULL) {
+			return $this->sf->table('categories');
+		} else {
+			return $this->sf->table('categories')->where('id = ?', $category_id);
+		}
+	}
+
+	/**
+	 * @param $category_id
 	 * @param $name
 	 * @param null $slug
 	 * @param int $priority
+	 * @param null $parent
 	 */
-	public function update($id, $name, $slug = NULL, $priority = 0) {
+	public function update($category_id, $name, $slug = NULL, $priority = 0, $parent = NULL) {
 		$slug = Nette\Utils\Strings::webalize($slug ? : $name);
-		$this->sf->table('categories')->where('id = ?', $id)->update(array(
+		$this->sf->table('categories')->where('id = ?', $category_id)->update(array(
 			'name' => $name,
 			'slug' => $slug,
 			'priority' => $priority,
+			'parent' => $parent,
 		));
 	}
 
 	/**
-	 * @param $id
+	 * @param $category_id
 	 */
-	public function delete($id) {
-		$this->sf->table('categories')->where('id = ?', $id)->delete();
+	public function delete($category_id) {
+		$this->sf->table('categories')->where('id = ?', $category_id)->delete();
 	}
 
 }

@@ -1,68 +1,28 @@
 {block |strip|trim}
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<meta name="robots" content="{$robots}" n:ifset="$robots">
+	{include '../../templates/layout/head.latte'}
+	<body>
+		<script> document.body.className+=' js' </script>
+		{include '../../templates/layout/header.latte'}
 
-	<title>
-		{$setting->title_prefix}
-		{$setting->title_separator}
-		{#title|striptags}Přihlášení{/#}
-		{$setting->title_sufix}
-	</title>
-
-	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/bootstrap.min.css">
-	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/screen.css">
-	<link rel="stylesheet" media="print" href="{$basePath}/css/print.css">
-	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
-	{#head}{/#}
-</head>
-
-<body>
-	<script> document.body.className+=' js' </script>
-
-	<div id="header">
-		<div id="buttons">
-			<ul>
-				<li><a n:href=":Front:Register:new" style="background-image: url('{$basePath}/images/button_greenl.png')">vytvořit profil</a></li>
-				{if !$user->isLoggedIn()}
-					<li><a n:href=":Auth:Sign:in" style="background-image: url('{$basePath}/images/button_greend.png')">přihlásit se</a></li>
-				{else}
-					<li><a n:href=":Auth:Sign:out" style="background-image: url('{$basePath}/images/button_greend.png')">odhlásit se</a></li>
-				{/if}
-			</ul>
-		</div>
-		<div class="basket">
-			{if $user->isAllowed('price', 'view')}
-				{snippet basket}
-					<h3><a n:href=":Front:Basket:summary">Nákupní košík ({$basket->getItemsCount()})</a></h3>
-				{/snippet}
-			{/if}
-		</div>
-	</div>
-
-	<div id="main">
-		<div class="inner">
+		<div class="container shadow" style="padding: 20px 30px;">
 			<div n:foreach="$flashes as $flash" class="alert {$flash->type}">{$flash->message}</div>
 			{include #content}
 		</div>
-	</div>
 
-	<div id="footer">
-		<img src="{$basePath}/images/icon_ieaste.png">
-		Provozovatelem portálu a vlastníkem obchodní značky iKariera je nezisková organizace IEASTE České Republiky<br>
-		Všechna práva vyhrazena<br>
-		2009 - {date('Y')}
-	</div>
+		<div class="container text-right hidden-print footer" style="background:transparent">
+			&copy; 2012 - <?php echo date("Y"); ?>&nbsp;<a n:href="Homepage:">Martin Zlámal</a> <span class="glyphicon glyphicon-qrcode"></span> | {if $user->isLoggedIn()}<a href="{link :Auth:Sign:out}">Odhlásit</a>{else}<a n:href=":Auth:Sign:in" data-toggle="modal">Login</a>{/if}<br>
+			<a href="http://www.fresh-hosting.cz/" target="_blank">www.fresh-hosting.cz</a> | <a href="https://bitbucket.org/mrtnzlml/www.zeminem.cz/issues" target="_blank">Našli jste chybu?</a>
+		</div>
 
-	{#scripts}
-	<script src="{$basePath}/js/jquery.js"></script>
-	<script src="{$basePath}/js/holder.js"></script>
-	<script src="{$basePath}/js/netteForms.js"></script>
-	<script src="{$basePath}/js/nette.ajax.js"></script>
-	<script src="{$basePath}/js/main.js"></script>
-	{/#}
-</body>
+		{#scripts}
+		<script src="{$basePath}/js/jquery.js"></script>
+		<script src="{$basePath}/js/holder.js"></script>
+		<script src="{$basePath}/js/netteForms.js"></script>
+		<script src="{$basePath}/js/nette.ajax.js"></script>
+		<script src="{$basePath}/js/main.js"></script>
+		{/#}
+	</body>
 </html>
 {/block}

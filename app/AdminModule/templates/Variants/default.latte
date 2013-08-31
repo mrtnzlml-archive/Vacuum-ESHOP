@@ -21,12 +21,6 @@
 				{label name /}
 				{input name, class => span12}
 			</div>
-			{if $user->isInRole('admin')}
-				<div class="span4">
-					{label lc /}
-					{input lc, class => span12}
-				</div>
-			{/if}
 			<div class="span3">
 				<label>&nbsp;</label>
 				{input save, class => "span12 btn btn-success"}

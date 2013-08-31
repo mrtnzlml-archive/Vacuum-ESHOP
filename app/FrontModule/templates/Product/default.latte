@@ -1,25 +1,14 @@
 {#content}
-<div class="row-fluid">
-	<h3 style="margin-top:0">O nás</h3>
-	<p>
-		Jsme mezinárodní organizace s více jak šedesátiletou tradicí. Působíme v 85 zemích světa.
-		Naším hlavním posláním je zajišťování zahraničních praxí pro studenty technických vysokých škol.
-		Celosvětově tak IAESTE přispívá k rozvoji odborných znalostí studentů, k porozumění mezi národy i k
-		odstranění rozdílů v technické vyspělosti jednotlivých zemí.
-	</p>
-	<p>
-		Organizaci IAESTE v České republice tvoří z drtivé části sami studenti, kteří se dobrovolně podílejí na
-		realizaci všech aktivit a přitom se učí novým věcem, zlepšují své dovednosti a v neposlední řadě se
-		baví v dobré partě přátel. Organizace tak stojí a padá s jejich schopnostmi, zapáleností pro věc, chutí tvořit.
-	</p>
-	<h3>Přehled všech nabízených produktů</h3>
-</div>
+<h3>O nás</h3>
+<p>&hellip;</p>
 
-<div class="row-fluid">
+<h3>Přehled všech nabízených produktů</h3>
+
+<div class="row">
 	{if count($products) === 0}
 		<div class="alert alert-error">Momentálně nejsou žádné produkty k prodeji.</div>
 	{/if}
-	<div class="span4 product" n:foreach="$products as $product">
+	<div class="col-lg-4 product" n:foreach="$products as $product">
 		{var $picture = $productsRepository->getPromotedPicture($product->id)}
 		{if $picture}
 			<div style="height:210px">
