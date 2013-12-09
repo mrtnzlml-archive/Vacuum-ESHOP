@@ -13,6 +13,13 @@ class VariantsRepository extends Nette\Object {
 	/** @var Nette\Database\SelectionFactory @inject */
 	public $sf;
 
+	public function create() {
+
+	}
+
+
+	//////////////////////////////////////////////////
+
 	/**
 	 * @return Nette\Database\Table\Selection
 	 */

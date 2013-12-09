@@ -28,7 +28,7 @@ class CategoriesPresenter extends BasePresenter {
 		$grid->addColumn('name', 'Název kategorie')->enableSort();
 		$grid->addColumn('slug', 'URL slug')->enableSort();
 		$grid->addColumn('priority', 'Priorita')->enableSort();
-		$grid->addColumn('parent', 'Rodičovská kategorie')->enableSort();
+		//$grid->addColumn('parent', 'Rodičovská kategorie')->enableSort();
 
 		$grid->setRowPrimaryKey('id');
 		$grid->setDataSourceCallback($this->getDataSource);
@@ -40,8 +40,8 @@ class CategoriesPresenter extends BasePresenter {
 			$form->addText('slug');
 			$form->addText('priority');
 
-			$categories = $this->categories->read()->fetchPairs('id', 'name');
-			$form->addSelect('parent', NULL, $categories)->setPrompt('---');
+			//$categories = $this->categories->read()->fetchPairs('id', 'name');
+			//$form->addSelect('parent', NULL, $categories)->setPrompt('---');
 			return $form;
 		});
 
@@ -80,8 +80,8 @@ class CategoriesPresenter extends BasePresenter {
 		$form->addText('name', 'Název:')->setRequired();
 		$form->addText('slug', 'URL:');
 
-		$categories = $this->categories->read()->fetchPairs('id', 'name');
-		$form->addSelect('parent', 'Rodičovská kategorie:', $categories)->setPrompt('---');
+		//$categories = $this->categories->read()->fetchPairs('id', 'name');
+		//$form->addSelect('parent', 'Rodičovská kategorie:', $categories)->setPrompt('---');
 
 		$form->addText('priority', 'Priorita:')->setType('number')->setDefaultValue(0);
 
@@ -102,14 +102,18 @@ class CategoriesPresenter extends BasePresenter {
 	public function formSucceeded(\Nette\Forms\Controls\Button $button) {
 		$vals = $button->getForm()->getValues();
 		try {
-			$this->categories->create($vals->name, $vals->slug, $vals->priority, $vals->parent);
+			//$this->categories->create($vals->name, $vals->slug, $vals->priority, $vals->parent);
+			$this->categories->create($vals->name, $vals->slug, $vals->priority);
+			$button->getForm()->setValues(array(), TRUE); //TODO: lepší reset, toto ignoruje původní setValue();
 			$this->flashMessage('Kategorie byla úspěšně vytvořena.', 'alert-success');
 		} catch (\PDOException $exc) {
-			strpos($exc->getMessage(), '1062') !== FALSE ? $this->flashMessage('Tato kategorie již existuje.', 'alert-error') : NULL; //DUPLICITA
-			$this->user->isInRole('admin') ? $this->flashMessage($exc->getMessage(), 'alert-error') : NULL;
+			if (strpos($exc->getMessage(), '1062') !== FALSE) { //DUPLICITA
+				$this->flashMessage('Tato kategorie již existuje.', 'alert-danger');
+			} else {
+				$this->flashMessage('ERR - ' . $exc->getCode(), 'alert-danger');
+			}
 		}
 		if ($this->isAjax()) {
-			$button->getForm()->setValues(array(), TRUE);
 			$this->invalidateControl();
 		} else {
 			$this->redirect('this');
@@ -122,12 +126,16 @@ class CategoriesPresenter extends BasePresenter {
 	public function formSucceededUpdate(\Nette\Forms\Controls\Button $button) {
 		$vals = $button->getForm()->getValues();
 		try {
-			$this->categories->update($vals->category_id, $vals->name, $vals->slug, $vals->priority, $vals->parent);
 			$this->template->selected = $vals->category_id;
+			//$this->categories->update($vals->category_id, $vals->name, $vals->slug, $vals->priority, $vals->parent);
+			$this->categories->update($vals->category_id, $vals->name, $vals->slug, $vals->priority);
 			$this->flashMessage('Změny úspěšně uloženy.', 'alert-success');
 		} catch (\PDOException $exc) {
-			strpos($exc->getMessage(), '1062') !== FALSE ? $this->flashMessage('Tato kategorie již existuje.', 'alert-error') : NULL; //DUPLICITA
-			$this->user->isInRole('admin') ? $this->flashMessage($exc->getMessage(), 'alert-error') : NULL;
+			if (strpos($exc->getMessage(), '1062') !== FALSE) { //DUPLICITA
+				$this->flashMessage('Tato kategorie již existuje.', 'alert-danger');
+			} else {
+				$this->flashMessage('ERR - ' . $exc->getCode(), 'alert-danger');
+			}
 		}
 		if ($this->isAjax()) {
 			$this->invalidateControl();
@@ -143,8 +151,12 @@ class CategoriesPresenter extends BasePresenter {
 		try {
 			$this->categories->delete($id);
 		} catch (\PDOException $exc) {
-			strpos($exc->getMessage(), '1451') !== FALSE ? $this->flashMessage('Tato kategorie obsahuje produkty. Nejdříve odstraňte produkty z této kategorie.', 'alert-error') : NULL; //REFERENCE
-			$this->user->isInRole('admin') ? $this->flashMessage($exc->getMessage(), 'alert-error') : NULL;
+			if (strpos($exc->getMessage(), '1451') !== FALSE) { //REFERENCE
+				//TODO: změnit RESTRICT v databázi na SET NULL při smazání
+				$this->flashMessage('Tato kategorie obsahuje produkty. Nejdříve odstraňte produkty z této kategorie.', 'alert-danger');
+			} else {
+				$this->flashMessage('ERR - ' . $exc->getCode(), 'alert-danger');
+			}
 		}
 		if ($this->isAjax()) {
 			$this->invalidateControl();
@@ -158,7 +170,6 @@ class CategoriesPresenter extends BasePresenter {
 	 */
 	public function handleEdit($id) {
 		$this->template->selected = $id;
-		//TODO: nesmí jít nastavit rodičovská kategorie sama sebe!
 		$categories = iterator_to_array($this->categories->read($id)->fetch());
 		$this['form']->setDefaults($categories);
 		$this['form']->setDefaults(array(

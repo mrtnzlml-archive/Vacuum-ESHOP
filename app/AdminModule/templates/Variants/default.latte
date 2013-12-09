@@ -5,11 +5,14 @@
 	{/snippet}
 {/if}
 
-<h1 n:block="title">Varianty akcí</h1>
-<p>
-	Varianty akcí se přiřazují konkrétnímu lokálnímu centru podle moderátora.
-	Moderátor nemůže vidět varianty akcí jiných lokálních center.
-</p>
+<h2 n:block="title">Varianty produktů</h2>
+{if !$empty}
+	{snippet grid}
+		{control datagrid}
+	{/snippet}
+{else}
+	<p>Zatím nejsou vytvořeny žádné varianty produktů.</p>
+{/if}
 
 {snippet variants}
 	{form variants}

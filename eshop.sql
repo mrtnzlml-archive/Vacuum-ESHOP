@@ -39,8 +39,11 @@ CREATE TABLE `products` (
 	`name` varchar(200) COLLATE utf8_general_ci NOT NULL,
 	`slug` varchar(200) COLLATE utf8_general_ci NOT NULL,
 	`priority` int(11) NOT NULL DEFAULT '0',
+	`category_id` int(11) NOT NULL,
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `slug` (`slug`)
+	UNIQUE KEY `slug` (`slug`),
+	KEY `category_id` (`category_id`),
+  CONSTRAINT `products_categories_fk1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 DROP TABLE IF EXISTS `settings`;

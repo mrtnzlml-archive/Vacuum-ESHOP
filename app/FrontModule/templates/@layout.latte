@@ -20,9 +20,9 @@
 			{var $category_id = NULL}
 			{#menu}
 			<ul class="nav nav-pills">
-				{*<li n:class="$presenter->isLinkCurrent(':Front:Product:default') ? active">
+				<li n:class="$presenter->isLinkCurrent(':Front:Product:default') ? active">
 					<a n:href=":Front:Product:default">vše</a>
-				</li>*}
+				</li>
 				{foreach $categories as $category}
 					{if $category->parent == $category_id}
 						{if $setting->show_empty_in_menu}
@@ -33,7 +33,7 @@
 										({count($productsRepository->getByCategoryId($category->id))})
 									{/if}
 								</a>
-								{include #menu, category_id => $category->id}
+								{*include #menu, category_id => $category->id*}
 							</li>
 						{elseif count($productsRepository->getByCategoryId($category->id)) !== 0}
 							<li{ifCurrent :Front:Product:category, $category->slug} class="active"{/ifCurrent}>
@@ -43,14 +43,14 @@
 										({count($productsRepository->getByCategoryId($category->id))})
 									{/if}
 								</a>
-								{include #menu, category_id => $category->id}
+								{*include #menu, category_id => $category->id*}
 							</li>
 						{/if}
 					{/if}
 				{/foreach}
-				{*<li style="float:right" n:if="$user->isLoggedIn()">
+				<li style="float:right" n:if="$user->isLoggedIn()">
 					<a n:href=":User:Setting:default">Uživatelské rozhraní</a>
-				</li>*}
+				</li>
 			</ul>
 			{/#}
 		</div>
