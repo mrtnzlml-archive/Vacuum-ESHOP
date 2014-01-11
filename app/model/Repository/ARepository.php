@@ -20,6 +20,7 @@ abstract class ARepository extends LeanMapper\Repository {
 		$row = $this->connection->select('*')
 			->from($this->getTable())
 			->where('[id] = %i', $id)
+			->where('[active] != %s', 'n')
 			->fetch();
 		if ($row === false) {
 			throw new \Exception('Entity was not found.');
@@ -32,7 +33,9 @@ abstract class ARepository extends LeanMapper\Repository {
 	 * @return array
 	 */
 	public function findAll($query = NULL) {
-		$statement = $this->connection->select('*')->from($this->getTable());
+		$statement = $this->connection->select('*')
+			->from($this->getTable())
+			->where('[active] != %s', 'n');
 		Model\CommonFilter::apply($statement, $query);
 		return $this->createEntities(
 			$statement->fetchAll()

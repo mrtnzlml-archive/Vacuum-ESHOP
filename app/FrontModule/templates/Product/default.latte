@@ -1,7 +1,11 @@
 {block content}
-<h3>Přehled všech nabízených produktů</h3>
 
 <div class="row">
+	<div class="col-lg-4 product" n:foreach="$products as $product">
+		<a n:href="detail $product->slug"><h4>{$product->name}</h4></a>
+		<p class="description">{$product->description|noescape|texy|striptags|truncate:200}</p>
+	</div>
+	{*
 	{if count($products) === 0}
 		<div class="alert alert-error">Momentálně nejsou žádné produkty k prodeji.</div>
 	{/if}
@@ -35,6 +39,7 @@
 			<p><a n:href=":Front:Register:new">Zaregistrovat se</a></p>
 		{/if}
 	</div>
+	*}
 </div>
 
 {control paginator}

@@ -20,9 +20,9 @@ class ProductPresenter extends BasePresenter {
 	/** @var \Model\UserRepository @inject */
 	public $users;
 
-	/**
-	 * @param $category
-	 */
+	/** @var \Model\Repository\ProductRepository @inject */
+	public $productRepository;
+
 	public function renderDefault() {
 		$limit = $this->setting->items_per_page;
 		$allProducts = $this->products->getAllActual()->select('id')->count();
@@ -32,9 +32,11 @@ class ProductPresenter extends BasePresenter {
 		$paginator->itemsPerPage = $limit;
 		$paginator->itemCount = $allProducts;
 
-		$products = $this->products->getAllActual()->order('priority DESC, event_date ASC')->limit($limit, $paginator->offset);
-		$this->template->products = $products;
-		$this->template->productsRepository = $this->products;
+		$this->template->products = $this->productRepository->findAll([
+			'order' => 'priority DESC, event_date ASC',
+			'limit' => $limit,
+			'offset' => $paginator->offset,
+		]);
 	}
 
 	/**

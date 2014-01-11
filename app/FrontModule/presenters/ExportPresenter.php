@@ -2,8 +2,8 @@
 
 namespace App\FrontModule;
 
-use Nette,
-	Model;
+use Model;
+use Nette;
 
 /**
  * Class ExportPresenter
@@ -11,8 +11,11 @@ use Nette,
  */
 class ExportPresenter extends BasePresenter {
 
+	/** @var \Model\Repository\ProductRepository @inject */
+	public $productRepository;
+
 	function renderSitemap() {
-		$this->template->products = $this->products->getAll();
+		$this->template->products = $this->productRepository->findAll();
 	}
 
 }

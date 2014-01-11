@@ -68,3 +68,5 @@ services:
 	- Model\SettingsRepository
 	- Model\UserRepository
 	- Model\VariantsRepository
+
+	- Model\Repository\ProductRepository
