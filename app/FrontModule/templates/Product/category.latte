@@ -1,4 +1,4 @@
-{#content}
+{block content}
 <div class="row">
 	{if count($products) === 0}
 		<div class="alert alert-error">Momentálně nejsou žádné produkty v této kategorii k prodeji.</div>
@@ -17,7 +17,7 @@
 			</a>
 		{/if}
 		<a n:href="detail $product->slug"><h4>{$product->name}</h4></a>
-		<p class="description">{!$product->description|texy|striptags|truncate:200}</p>
+		<p class="description">{$product->description|noescape|texy|striptags|truncate:200}</p>
 		{if $user->isAllowed('price', 'view')}
 			{if $product->active === 'y'}
 				<p class="price">Cena: {$product->price|dph|money} včetně DPH</p>
@@ -36,4 +36,4 @@
 </div>
 
 {control paginator}
-{/#}
+{/block}

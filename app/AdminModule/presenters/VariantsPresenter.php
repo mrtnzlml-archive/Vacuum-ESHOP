@@ -50,9 +50,9 @@ class VariantsPresenter extends BasePresenter {
 		}
 		$lc = $this->user->identity->lc;
 		if($lc == NULL) {
-			$selection = $this->sf->table('variants')->where($filters);
+			$selection = $this->database->table('variants')->where($filters);
 		} else {
-			$selection = $this->sf->table('variants')->where($filters)->where('lc = ?', $lc);
+			$selection = $this->database->table('variants')->where($filters)->where('lc = ?', $lc);
 		}
 		if ($order) {
 			$selection->order(implode(' ', $order));

@@ -10,14 +10,14 @@ use Nette;
  */
 class UserRepository extends Nette\Object {
 
-	/** @var Nette\Database\SelectionFactory @inject */
-	public $sf;
+	/** @var Nette\Database\Context @inject */
+	public $database;
 
 	/**
 	 * @return Nette\Database\Table\Selection
 	 */
 	public function getAll() {
-		return $this->sf->table('users');
+		return $this->database->table('users');
 	}
 
 	/**
@@ -25,14 +25,14 @@ class UserRepository extends Nette\Object {
 	 * @return Nette\Database\Table\Selection
 	 */
 	public function getById($id) {
-		return $this->sf->table('users')->where('id = ?', $id);
+		return $this->database->table('users')->where('id = ?', $id);
 	}
 
 	/**
 	 * @return Nette\Database\Table\Selection
 	 */
 	public function getWaitingUsers() {
-		return $this->sf->table('users')->where('role = ?', 'waiting');
+		return $this->database->table('users')->where('role = ?', 'waiting');
 	}
 
 	/**
@@ -40,7 +40,7 @@ class UserRepository extends Nette\Object {
 	 * @return bool|int|Nette\Database\Table\IRow
 	 */
 	public function createNewUser(array $data) {
-		return $this->sf->table('users')->insert($data);
+		return $this->database->table('users')->insert($data);
 	}
 
 	/**
@@ -48,7 +48,7 @@ class UserRepository extends Nette\Object {
 	 * @param $data
 	 */
 	public function update($user_id, $data) {
-		$this->sf->table('users')->where('id = ?', $user_id)->update($data);
+		$this->database->table('users')->where('id = ?', $user_id)->update($data);
 	}
 
 	/**
@@ -56,7 +56,7 @@ class UserRepository extends Nette\Object {
 	 * @return int
 	 */
 	public function delete($id) {
-		return $this->sf->table('users')->where('id = ?', $id)->delete();
+		return $this->database->table('users')->where('id = ?', $id)->delete();
 	}
 
 }

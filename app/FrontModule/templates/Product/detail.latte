@@ -1,4 +1,4 @@
-{#content}
+{block content}
 
 <div class="row">
 	<div class="col-lg-5">
@@ -63,7 +63,7 @@
 			<p><a n:href=":Front:Register:new">Zaregistrovat se</a></p>
 		{/if}
 
-		<p>{!$product->description|texy}</p>
+		<p>{$product->description|noescape|texy}</p>
 	</div>
 </div>
 
@@ -79,13 +79,13 @@
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-{/#}
+{/block}
 
 
 
 
 
-{#scripts}
+{block scripts}
 {include #parent}
 <script type='text/javascript' src='{$basePath}/js/cloud-zoom.js'></script>
 <script>
@@ -119,8 +119,8 @@
 		});
 	});
 </script>
-{/#}
+{/block}
 
-{#head}
+{block head}
 <style>img { max-width: none; }</style>
-{/#}
+{/block}

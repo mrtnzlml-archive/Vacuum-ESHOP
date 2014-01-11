@@ -1,4 +1,4 @@
-{#content}
+{block content}
 {if isset($waiting) && !empty($waiting) && $user->isInRole('admin')}
 	{include '../waiting.latte'}
 {/if}

@@ -10,8 +10,8 @@ use Nette\Image;
  */
 abstract class BasePresenter extends \Base\BaseBasePresenter {
 
-	/** @var Nette\Database\SelectionFactory @inject */
-	public $sf;
+	/** @var Nette\Database\Context @inject */
+	public $database;
 	/** @var \Model\UserRepository @inject */
 	public $users;
 	/** @var \Model\ProductRepository @inject */

@@ -10,21 +10,21 @@ use Nette;
  */
 class ProductRepository extends Nette\Object {
 
-	/** @var Nette\Database\SelectionFactory @inject */
-	public $sf;
+	/** @var Nette\Database\Context @inject */
+	public $database;
 
 	/**
 	 * @return Nette\Database\Table\Selection
 	 */
 	public function getAll() {
-		return $this->sf->table('products')->where('active != ?', 'n');
+		return $this->database->table('products')->where('active != ?', 'n');
 	}
 
 	/**
 	 * @return Nette\Database\Table\Selection
 	 */
 	public function getAllActual() {
-		return $this->sf->table('products')->where('event_date > NOW()')->where('active != ?', 'n');
+		return $this->database->table('products')->where('event_date > NOW()')->where('active != ?', 'n');
 	}
 
 	/**
@@ -32,7 +32,7 @@ class ProductRepository extends Nette\Object {
 	 */
 	public function add($data) {
 		$data['slug'] = Nette\Utils\Strings::webalize($data['slug'] ? : $data['name']);
-		$this->sf->table('products')->insert($data);
+		$this->database->table('products')->insert($data);
 	}
 
 	/**
@@ -41,14 +41,14 @@ class ProductRepository extends Nette\Object {
 	 */
 	public function update($id, $data) {
 		$data['slug'] = Nette\Utils\Strings::webalize($data['slug'] ? : $data['name']);
-		$this->sf->table('products')->where('id = ?', $id)->update($data);
+		$this->database->table('products')->where('id = ?', $id)->update($data);
 	}
 
 	/**
 	 * @param $id
 	 */
 	public function delete($product_id) {
-		$this->sf->table('products')->where('id = ?', $product_id)->delete();
+		$this->database->table('products')->where('id = ?', $product_id)->delete();
 	}
 
 	/**
@@ -56,7 +56,7 @@ class ProductRepository extends Nette\Object {
 	 * @return Nette\Database\Table\Selection
 	 */
 	public function getBySlug($slug) {
-		return $this->sf->table('products')->where('slug = ?', $slug)->where('active != ?', 'n');
+		return $this->database->table('products')->where('slug = ?', $slug)->where('active != ?', 'n');
 	}
 
 	/**
@@ -64,7 +64,7 @@ class ProductRepository extends Nette\Object {
 	 * @return Nette\Database\Table\Selection
 	 */
 	public function getById($id) {
-		return $this->sf->table('products')->where('id = ?', $id)->where('active != ?', 'n');
+		return $this->database->table('products')->where('id = ?', $id)->where('active != ?', 'n');
 	}
 
 	/**
@@ -72,7 +72,7 @@ class ProductRepository extends Nette\Object {
 	 * @return Nette\Database\Table\Selection
 	 */
 	public function getByCategoryId($category_id) {
-		return $this->sf->table('products')
+		return $this->database->table('products')
 			->where('category_id = ?', $category_id)
 			->where('event_date > NOW()')
 			->where('active != ?', 'n');
@@ -83,7 +83,7 @@ class ProductRepository extends Nette\Object {
 	 * @return bool
 	 */
 	public function hasVariant($product_id) {
-		return (boolean)$this->sf->table('variants_products')->where('products_id = ?', $product_id)->count();
+		return (boolean)$this->database->table('variants_products')->where('products_id = ?', $product_id)->count();
 	}
 
 
@@ -97,7 +97,7 @@ class ProductRepository extends Nette\Object {
 			'name' => $name,
 			'product_id' => $id,
 		);
-		return $this->sf->table('pictures')->insert($data);
+		return $this->database->table('pictures')->insert($data);
 	}
 
 	/**
@@ -105,7 +105,7 @@ class ProductRepository extends Nette\Object {
 	 * @return Nette\Database\Table\Selection
 	 */
 	public function getPictureById($id) {
-		return $this->sf->table('pictures')->where('id = ?', $id);
+		return $this->database->table('pictures')->where('id = ?', $id);
 	}
 
 	/**
@@ -113,7 +113,7 @@ class ProductRepository extends Nette\Object {
 	 * @return Nette\Database\Table\Selection
 	 */
 	public function getPicturesById($product_id) {
-		return $this->sf->table('pictures')->where('product_id = ?', $product_id);
+		return $this->database->table('pictures')->where('product_id = ?', $product_id);
 	}
 
 	/**
@@ -121,8 +121,8 @@ class ProductRepository extends Nette\Object {
 	 * @return Nette\Database\Table\Selection
 	 */
 	public function getPromotedPicture($product_id) {
-		$promo = $this->sf->table('pictures')->where('product_id = ?', $product_id)->where('promo = ?', TRUE)->fetch();
-		if($promo === FALSE) {
+		$promo = $this->database->table('pictures')->where('product_id = ?', $product_id)->where('promo = ?', TRUE)->fetch();
+		if ($promo === FALSE) {
 			//There is no promoted picture, select 1 non-promoted
 			$promo = $this->getPicturesById($product_id)->fetch();
 		}
@@ -133,7 +133,7 @@ class ProductRepository extends Nette\Object {
 	 * @return bool|mixed|Nette\Database\Table\ActiveRow|IRow
 	 */
 	public function getPromotedProduct() {
-		return $this->sf->table('products')->where('promo = ?', TRUE)->fetch();
+		return $this->database->table('products')->where('promo = ?', TRUE)->fetch();
 	}
 
 	/**
@@ -141,7 +141,7 @@ class ProductRepository extends Nette\Object {
 	 * @return int
 	 */
 	public function deletePicture($id) {
-		return $this->sf->table('pictures')->where('id = ?', $id)->delete();
+		return $this->database->table('pictures')->where('id = ?', $id)->delete();
 	}
 
 	/**
@@ -149,7 +149,7 @@ class ProductRepository extends Nette\Object {
 	 * @return int
 	 */
 	public function unsetPicturePromo($product_id) {
-		return $this->sf->table('pictures')->where('product_id = ?', $product_id)->where('promo = ?', TRUE)->update(array('promo' => 0));
+		return $this->database->table('pictures')->where('product_id = ?', $product_id)->where('promo = ?', TRUE)->update(array('promo' => 0));
 	}
 
 	/**
@@ -158,14 +158,14 @@ class ProductRepository extends Nette\Object {
 	 * @return int
 	 */
 	public function setPicturePromo($product_id, $picture_id) {
-		return $this->sf->table('pictures')->where('product_id = ?', $product_id)->where('id = ?', $picture_id)->update(array('promo' => 1));
+		return $this->database->table('pictures')->where('product_id = ?', $product_id)->where('id = ?', $picture_id)->update(array('promo' => 1));
 	}
 
 	/**
 	 * @return int
 	 */
 	public function unsetPromo() {
-		return $this->sf->table('products')->where('promo = ?', TRUE)->update(array('promo' => 0));
+		return $this->database->table('products')->where('promo = ?', TRUE)->update(array('promo' => 0));
 	}
 
 	/**
@@ -173,7 +173,7 @@ class ProductRepository extends Nette\Object {
 	 * @return int
 	 */
 	public function setPromo($product_id) {
-		return $this->sf->table('products')->where('id = ?', $product_id)->update(array('promo' => 1));
+		return $this->database->table('products')->where('id = ?', $product_id)->update(array('promo' => 1));
 	}
 
 }

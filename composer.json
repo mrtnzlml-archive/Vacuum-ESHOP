@@ -18,8 +18,9 @@
 	},
 	"require": {
 		"php": ">= 5.3.0",
-		"nette/nette": "@dev",
-        "dg/texy": "2.2",
+		"nette/nette": "2.2.*@dev",
+		"nette/tester": "dev-master",
+		"dg/texy": "dev-release-2.x",
 		"nextras/datagrid": "dev-master",
 		"srigi/nette-visualpaginator": "dev-master",
 		"janmarek/webloader": "dev-master",

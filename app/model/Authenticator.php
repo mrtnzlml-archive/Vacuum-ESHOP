@@ -11,17 +11,18 @@ use Nette\Utils\Strings;
  */
 class Authenticator extends Nette\Object implements Nette\Security\IAuthenticator {
 
-	/** @var Nette\Database\SelectionFactory @inject */
-	public $sf;
+	/** @var Nette\Database\Context @inject */
+	public $database;
 
 	/**
 	 * Performs an authentication.
-	 * @return Nette\Security\Identity
-	 * @throws Nette\Security\AuthenticationException
+	 * @param array $credentials
+	 * @return Nette\Security\Identity|Nette\Security\IIdentity
+	 * @throws \Nette\Security\AuthenticationException
 	 */
 	public function authenticate(array $credentials) {
 		list($username, $password) = $credentials;
-		$row = $this->sf->table('users')->where('username', $username)->fetch();
+		$row = $this->database->table('users')->where('username', $username)->fetch();
 
 		if (!$row) {
 			throw new Nette\Security\AuthenticationException('The username is incorrect.', self::IDENTITY_NOT_FOUND);
@@ -36,10 +37,10 @@ class Authenticator extends Nette\Object implements Nette\Security\IAuthenticato
 		return new Nette\Security\Identity($row->id, $row->role, $result);
 	}
 
-
 	/**
 	 * Computes salted password hash.
-	 * @param  string
+	 * @param $password
+	 * @param null $salt
 	 * @return string
 	 */
 	public static function calculateHash($password, $salt = NULL) {

@@ -18,7 +18,7 @@
 
 		<div class="container hidden-print main-nav" style="background:transparent;padding:0">
 			{var $category_id = NULL}
-			{#menu}
+			{block menu}
 			<ul class="nav nav-pills">
 				<li n:class="$presenter->isLinkCurrent(':Front:Product:default') ? active">
 					<a n:href=":Front:Product:default">vše</a>
@@ -52,7 +52,7 @@
 					<a n:href=":User:Setting:default">Uživatelské rozhraní</a>
 				</li>
 			</ul>
-			{/#}
+			{/block}
 		</div>
 
 
@@ -66,14 +66,14 @@
 			<a href="http://www.fresh-hosting.cz/" target="_blank">www.fresh-hosting.cz</a> | <a href="https://bitbucket.org/mrtnzlml/www.zeminem.cz/issues" target="_blank">Našli jste chybu?</a>
 		</div>
 
-		{#scripts}
+		{block scripts}
 		<script src="{$basePath}/js/jquery.js"></script>
 		<script src="{$basePath}/js/jquery.qrcode-0.6.0.js"></script>
 		<script src="{$basePath}/js/holder.js"></script>
 		<script src="{$basePath}/js/netteForms.js"></script>
 		<script src="{$basePath}/js/nette.ajax.js"></script>
 		<script src="{$basePath}/js/main.js"></script>
-		{/#}
+		{/block}
 	</body>
 </html>
 {/block}

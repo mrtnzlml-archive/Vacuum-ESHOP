@@ -1,11 +1,11 @@
-{#content}
+{block content}
 <h2 n:block="title">Nastavení osobních údajů</h2>
 <p>Následující informace budou použity při objednávce a na rámcové smlouvě.</p>
 
 {snippet form}
 	{form userInfo}
-		<ul class="error" n:if="$form->allErrors">
-			<li n:foreach="$form->allErrors as $error">{$error}</li>
+		<ul class="error" n:if="$form->errors">
+			<li n:foreach="$form->errors as $error">{$error}</li>
 		</ul>
 		<div class="row-fluid">
 			<div class="span6">

@@ -62,7 +62,7 @@ class CategoriesPresenter extends BasePresenter {
 			else
 				$filters[$k . ' LIKE ?'] = "%$v%";
 		}
-		$selection = $this->sf->table('categories')->where($filters);
+		$selection = $this->database->table('categories')->where($filters);
 		if ($order) {
 			$selection->order(implode(' ', $order));
 		}

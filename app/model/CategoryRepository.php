@@ -10,8 +10,8 @@ use Nette;
  */
 class CategoryRepository extends Nette\Object {
 
-	/** @var Nette\Database\SelectionFactory @inject */
-	public $sf;
+	/** @var Nette\Database\Context @inject */
+	public $database;
 
 	/**
 	 * @param $name
@@ -21,7 +21,7 @@ class CategoryRepository extends Nette\Object {
 	 */
 	public function create($name, $slug = NULL, $priority = 0, $parent = NULL) {
 		$slug = Nette\Utils\Strings::webalize($slug ? : $name);
-		$this->sf->table('categories')->insert(array(
+		$this->database->table('categories')->insert(array(
 			'name' => $name,
 			'slug' => $slug,
 			'priority' => $priority,
@@ -35,9 +35,9 @@ class CategoryRepository extends Nette\Object {
 	 */
 	public function read($category_id = NULL) {
 		if ($category_id === NULL) {
-			return $this->sf->table('categories');
+			return $this->database->table('categories');
 		} else {
-			return $this->sf->table('categories')->where('id = ?', $category_id);
+			return $this->database->table('categories')->where('id = ?', $category_id);
 		}
 	}
 
@@ -50,7 +50,7 @@ class CategoryRepository extends Nette\Object {
 	 */
 	public function update($category_id, $name, $slug = NULL, $priority = 0, $parent = NULL) {
 		$slug = Nette\Utils\Strings::webalize($slug ? : $name);
-		$this->sf->table('categories')->where('id = ?', $category_id)->update(array(
+		$this->database->table('categories')->where('id = ?', $category_id)->update(array(
 			'name' => $name,
 			'slug' => $slug,
 			'priority' => $priority,
@@ -62,7 +62,7 @@ class CategoryRepository extends Nette\Object {
 	 * @param $category_id
 	 */
 	public function delete($category_id) {
-		$this->sf->table('categories')->where('id = ?', $category_id)->delete();
+		$this->database->table('categories')->where('id = ?', $category_id)->delete();
 	}
 
 }

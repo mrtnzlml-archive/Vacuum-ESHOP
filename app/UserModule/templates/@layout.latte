@@ -8,7 +8,7 @@
 	<title>
 		{$setting->title_prefix}
 		{$setting->title_separator}
-		{#title|striptags}Uživatelské rozhraní{/#}
+		{block title|striptags}Uživatelské rozhraní{/block}
 		{$setting->title_sufix}
 	</title>
 
@@ -16,7 +16,7 @@
 	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/screen.css">
 	<link rel="stylesheet" media="print" href="{$basePath}/css/print.css">
 	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
-	{#head}{/#}
+	{block head}{/block}
 </head>
 
 <body>
@@ -64,13 +64,13 @@
 		2009 - {date('Y')}
 	</div>
 
-	{#scripts}
+	{block scripts}
 	<script src="{$basePath}/js/jquery.js"></script>
 	<script src="{$basePath}/js/holder.js"></script>
 	<script src="{$basePath}/js/netteForms.js"></script>
 	<script src="{$basePath}/js/nette.ajax.js"></script>
 	<script src="{$basePath}/js/main.js"></script>
-	{/#}
+	{/block}
 </body>
 </html>
 {/block}

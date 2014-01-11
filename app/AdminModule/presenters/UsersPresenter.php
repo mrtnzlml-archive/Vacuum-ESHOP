@@ -86,9 +86,9 @@ class UsersPresenter extends BasePresenter {
 		}
 		$lc = $this->user->identity->lc;
 		if ($lc == NULL) {
-			$selection = $this->sf->table('users')->where($filters)->where('id != ?', $this->user->id);
+			$selection = $this->database->table('users')->where($filters)->where('id != ?', $this->user->id);
 		} else {
-			$selection = $this->sf->table('users')->where($filters)->where('lc = ?', $lc)->where('id != ?', $this->user->id);
+			$selection = $this->database->table('users')->where($filters)->where('lc = ?', $lc)->where('id != ?', $this->user->id);
 		}
 		if ($order) {
 			$selection->order(implode(' ', $order));

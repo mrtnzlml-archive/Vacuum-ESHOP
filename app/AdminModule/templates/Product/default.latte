@@ -1,4 +1,4 @@
-{#content}
+{block content}
 {if isset($waiting) && !empty($waiting) && $user->isInRole('admin')}
 	{snippet waiting}
 		{include '../waiting.latte'}
@@ -46,8 +46,8 @@
 	<div class="tab-content" style="min-height:500px">{*UX*}
 		<div class="tab-pane active" id="mainTab">
 			{form addForm}
-				<ul class="error" n:if="$form->allErrors">
-					<li n:foreach="$form->allErrors as $error">{$error}</li>
+				<ul class="error" n:if="$form->errors">
+					<li n:foreach="$form->errors as $error">{$error}</li>
 				</ul>
 				<div class="row-fluid">
 					<div class="span4">

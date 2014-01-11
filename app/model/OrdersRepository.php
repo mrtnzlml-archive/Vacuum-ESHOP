@@ -10,15 +10,15 @@ use Nette;
  */
 class OrdersRepository extends Nette\Object {
 
-	/** @var Nette\Database\SelectionFactory @inject */
-	public $sf;
+	/** @var Nette\Database\Context @inject */
+	public $database;
 
 	/**
 	 * @param $data
 	 * @return bool|int|Nette\Database\Table\IRow
 	 */
 	public function newOrder($data) {
-		return $this->sf->table('orders')->insert($data);
+		return $this->database->table('orders')->insert($data);
 	}
 
 	/**
@@ -30,7 +30,7 @@ class OrdersRepository extends Nette\Object {
 	 * @return bool|int|Nette\Database\Table\ActiveRow|Nette\Database\Table\IRow
 	 */
 	public function new_order_items($order_id, $product_id, $price, $quantity, $configuration = NULL) {
-		return $this->sf->table('order_items')->insert(array(
+		return $this->database->table('order_items')->insert(array(
 			'order_id' => $order_id,
 			'product_id' => $product_id,
 			'price' => $price,
@@ -44,7 +44,7 @@ class OrdersRepository extends Nette\Object {
 	 * @return Nette\Database\Table\Selection
 	 */
 	public function get_order_items($order_id) {
-		return $this->sf->table('order_items')->where('order_id = ?', $order_id);
+		return $this->database->table('order_items')->where('order_id = ?', $order_id);
 	}
 
 	/**
@@ -52,7 +52,7 @@ class OrdersRepository extends Nette\Object {
 	 * @return int
 	 */
 	public function delete($id) {
-		return $this->sf->table('orders')->where('id = ?', $id)->delete();
+		return $this->database->table('orders')->where('id = ?', $id)->delete();
 	}
 
 	/**
@@ -60,7 +60,7 @@ class OrdersRepository extends Nette\Object {
 	 * @param array $data
 	 */
 	public function update($order_id, array $data) {
-		$this->sf->table('orders')->where('id = ?', $order_id)->update($data);
+		$this->database->table('orders')->where('id = ?', $order_id)->update($data);
 	}
 
 	/**
@@ -68,14 +68,14 @@ class OrdersRepository extends Nette\Object {
 	 * @return Nette\Database\Table\Selection
 	 */
 	public function getById($id) {
-		return $this->sf->table('orders')->where('id = ?', $id);
+		return $this->database->table('orders')->where('id = ?', $id);
 	}
 
 	/**
 	 * @return Nette\Database\Table\Selection
 	 */
 	public function getAllOrders() {
-		return $this->sf->table('orders');
+		return $this->database->table('orders');
 	}
 
 }

@@ -4,26 +4,25 @@
 # If you don't protect this directory from direct web access, anybody will be able to see your passwords.
 # http://nette.org/security-warning
 #
-parameters:
 
 php:
 	date.timezone: Europe/Prague
 	# zlib.output_compression: yes
 
 nette:
+	session:
+		debugger: TRUE
+		expiration: 14 days
 	application:
 		errorPresenter: Front:Error
 		mapping:
 			*: App\*Module\*Presenter
-
-	session:
-		expiration: 14 days
-		debugger: true
-
+	container:
+		debugger: TRUE
+		accessors: TRUE
 
 services:
-	authenticator:
-		create: Model\Authenticator
+	authenticator: Model\Authenticator
 	authorizator:
 		class: Nette\Security\Permission
 		setup:
@@ -66,5 +65,3 @@ services:
 	- Model\SettingsRepository
 	- Model\UserRepository
 	- Model\VariantsRepository
-
-factories:
