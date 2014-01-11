@@ -24,6 +24,7 @@
 		"nextras/datagrid": "dev-master",
 		"srigi/nette-visualpaginator": "dev-master",
 		"janmarek/webloader": "dev-master",
-		"leafo/lessphp": "0.3.*@dev"
+		"leafo/lessphp": "0.3.*@dev",
+		"tharos/leanmapper": "dev-master"
 	}
 }

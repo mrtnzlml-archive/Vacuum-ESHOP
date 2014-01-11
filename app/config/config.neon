@@ -22,6 +22,9 @@ nette:
 		accessors: TRUE
 
 services:
+	- LeanMapper\Connection(%database%)
+	- Model\Entity\EntityFactory
+	- Model\Mapper\DefaultMapper
 	authenticator: Model\Authenticator
 	authorizator:
 		class: Nette\Security\Permission
