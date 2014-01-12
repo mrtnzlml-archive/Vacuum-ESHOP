@@ -62,7 +62,6 @@ services:
 	#- Fresh\Mailer([host: 'fresh-hosting.cz', username: %mailer_user%, password: %mailer_pass%, secure: ''])
 	- Fresh\Mailer([host: 'smtp.gmail.com', username: %mailer_user%, password: %mailer_pass%, secure: 'ssl'])
 
-	- Model\CategoryRepository
 	- Model\OrdersRepository
 	- Model\ProductRepository
 	- Model\SettingsRepository
@@ -72,3 +71,4 @@ services:
 	- Model\Repository\CategoryRepository
 	- Model\Repository\PictureRepository
 	- Model\Repository\ProductRepository
+	- Model\Repository\SettingRepository

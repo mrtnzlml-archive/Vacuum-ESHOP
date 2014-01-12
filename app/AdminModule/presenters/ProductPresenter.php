@@ -13,11 +13,11 @@ use Nette\Image;
  */
 class ProductPresenter extends BasePresenter {
 
-	/** @var \Model\CategoryRepository @inject */
-	public $categories;
 	/** @var \Model\VariantsRepository @inject */
 	public $variants;
 
+	/** @var \Model\Repository\CategoryRepository @inject */
+	public $categoryRepository;
 	/** @var \Model\Repository\ProductRepository @inject */
 	public $productRepository;
 

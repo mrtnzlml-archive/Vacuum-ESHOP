@@ -76,7 +76,7 @@ class ProductRepository extends Nette\Object {
 	 * @return bool
 	 */
 	public function hasVariant($product_id) {
-		return (boolean)$this->database->table('variants_products')->where('products_id = ?', $product_id)->count();
+		return (boolean)$this->database->table('product_variant')->where('product_id = ?', $product_id)->count();
 	}
 
 
@@ -90,7 +90,7 @@ class ProductRepository extends Nette\Object {
 			'name' => $name,
 			'product_id' => $id,
 		);
-		return $this->database->table('pictures')->insert($data);
+		return $this->database->table('picture')->insert($data);
 	}
 
 	/**
@@ -98,7 +98,7 @@ class ProductRepository extends Nette\Object {
 	 * @return Nette\Database\Table\Selection
 	 */
 	public function getPictureById($id) {
-		return $this->database->table('pictures')->where('id = ?', $id);
+		return $this->database->table('picture')->where('id = ?', $id);
 	}
 
 	/**
@@ -106,7 +106,7 @@ class ProductRepository extends Nette\Object {
 	 * @return Nette\Database\Table\Selection
 	 */
 	public function getPicturesById($product_id) {
-		return $this->database->table('pictures')->where('product_id = ?', $product_id);
+		return $this->database->table('picture')->where('product_id = ?', $product_id);
 	}
 
 	/**
@@ -114,7 +114,7 @@ class ProductRepository extends Nette\Object {
 	 * @return Nette\Database\Table\Selection
 	 */
 	public function getPromotedPicture($product_id) {
-		$promo = $this->database->table('pictures')->where('product_id = ?', $product_id)->where('promo = ?', TRUE)->fetch();
+		$promo = $this->database->table('picture')->where('product_id = ?', $product_id)->where('promo = ?', TRUE)->fetch();
 		if ($promo === FALSE) {
 			//There is no promoted picture, select 1 non-promoted
 			$promo = $this->getPicturesById($product_id)->fetch();
@@ -134,7 +134,7 @@ class ProductRepository extends Nette\Object {
 	 * @return int
 	 */
 	public function deletePicture($id) {
-		return $this->database->table('pictures')->where('id = ?', $id)->delete();
+		return $this->database->table('picture')->where('id = ?', $id)->delete();
 	}
 
 	/**
@@ -142,7 +142,7 @@ class ProductRepository extends Nette\Object {
 	 * @return int
 	 */
 	public function unsetPicturePromo($product_id) {
-		return $this->database->table('pictures')->where('product_id = ?', $product_id)->where('promo = ?', TRUE)->update(array('promo' => 0));
+		return $this->database->table('picture')->where('product_id = ?', $product_id)->where('promo = ?', TRUE)->update(array('promo' => 0));
 	}
 
 	/**
@@ -151,7 +151,7 @@ class ProductRepository extends Nette\Object {
 	 * @return int
 	 */
 	public function setPicturePromo($product_id, $picture_id) {
-		return $this->database->table('pictures')->where('product_id = ?', $product_id)->where('id = ?', $picture_id)->update(array('promo' => 1));
+		return $this->database->table('picture')->where('product_id = ?', $product_id)->where('id = ?', $picture_id)->update(array('promo' => 1));
 	}
 
 	/**

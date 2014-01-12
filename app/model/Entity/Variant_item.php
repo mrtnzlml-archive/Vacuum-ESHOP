@@ -5,17 +5,16 @@ namespace Model\Entity;
 use LeanMapper;
 
 /**
- * Class Category
+ * Class Variant_item
  * @package Model\Entity
  *
- * @property Category[] $category m:belongsToMany
+ * @property Variant $variant m:hasOne
  *
  * @property int $id
  * @property string $name
- * @property string $slug
+ * @property string $price
  * @property int $priority
- * @property int|null $parent
  */
-class Category extends AEntity {
+class Variant_item extends AEntity {
 
 }

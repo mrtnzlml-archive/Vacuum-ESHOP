@@ -12,6 +12,7 @@
 		</div>
 		<div class="col-lg-7">
 			<h2 n:block=title>{$product->name}</h2>
+			{control buyForm}
 			<p>{$product->description|noescape|texy}</p>
 		</div>
 

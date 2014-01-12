@@ -27,10 +27,12 @@ class ProductPresenter extends BasePresenter {
 	/** @var \Model\Repository\ProductRepository @inject */
 	public $productRepository;
 
+	private $product;
+
 	public function renderDefault() {
 		$limit = $this->setting->items_per_page;
-
 		$products_count = $this->productRepository->getActiveCount();
+
 		$vp = new \VisualPaginator($this, 'paginator');
 		$paginator = $vp->getPaginator();
 		$paginator->itemsPerPage = $limit;
@@ -53,7 +55,7 @@ class ProductPresenter extends BasePresenter {
 			throw new Nette\Application\BadRequestException;
 		} else {
 			$limit = $this->setting->items_per_page;
-			$allProducts = $this->products->getAllActual()->where('category.slug', $category_slug)->count();
+			$allProducts = 2; //$this->products->getAllActual()->where('category.slug', $category_slug)->count();
 
 			$vp = new \VisualPaginator($this, 'paginator');
 			$paginator = $vp->getPaginator();
@@ -72,7 +74,8 @@ class ProductPresenter extends BasePresenter {
 	 */
 	public function renderDetail($product_slug) {
 		try {
-			$this->template->product = $this->productRepository->findBySlug($product_slug);
+			$this->product = $this->productRepository->findBySlug($product_slug);
+			$this->template->product = $this->product;
 		} catch (\Exception $exc) {
 			$this->error();
 		}
@@ -85,10 +88,10 @@ class ProductPresenter extends BasePresenter {
 		$form = new Nette\Application\UI\Form;
 
 		$variants = array();
-		$prod = $this->products->getBySlug($this->getParameter('product'))->fetch();
-		foreach ($this->variants->getVariantsByProductId($prod->id) as $variant) {
-			foreach ($this->variants->getVariantItems($variant->variants_id)->order('priority DESC, name ASC') as $item) {
-				$variants[$item->id . '###' . $item->price . '###' . $item->price_status] = $item->name;
+		foreach ($this->product->variants as $variant) {
+			foreach ($variant->variant_items as $variant_item) {
+				//TODO: nepředávat všechny hodnoty a výpočet neprovádět v JS, ale AJAXově...
+				$variants[$variant_item->id . '###' . $variant_item->price] = $variant_item->name;
 			}
 		}
 

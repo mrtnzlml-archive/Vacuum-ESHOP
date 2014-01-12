@@ -13,13 +13,14 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
 	public $cacheStorage;
 	/** @var \Basket @inject */
 	public $basket;
-	/** @var \Model\CategoryRepository @inject */
-	public $categories;
 	/** @var \Model\SettingsRepository @inject */
 	public $settings;
 	/** @var \Model\ProductRepository @inject */
 	public $products;
 	protected $setting;
+
+	/** @var \Model\Repository\CategoryRepository @inject */
+	public $categoryRepository;
 
 	public function createComponentCss() {
 		$files = new \WebLoader\FileCollection(WWW_DIR . '/css');
@@ -39,13 +40,14 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
 	}
 
 	public function beforeRender() {
+		parent::beforeRender();
+
 		$this->template->basket = $this->basket;
 		$this->setting = $this->settings->getAllValues();
 		$this->template->setting = $this->setting;
-		$this->template->categories = iterator_to_array($this->categories->read()->order('priority DESC, name ASC'));
+		$this->template->categories = $this->categoryRepository->findAll(['order' => 'priority DESC, name ASC']);
 		$this->template->productsRepository = $this->products;
 
-		parent::beforeRender();
 		// modifikator {...|money}
 		$this->template->registerHelper('money', function ($value) {
 			return str_replace(' ', ' ', number_format($value, 0, ',', ' ') . ' Kč');

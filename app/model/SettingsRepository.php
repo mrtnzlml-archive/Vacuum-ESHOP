@@ -18,7 +18,7 @@ class SettingsRepository extends Nette\Object {
 	 * @return mixed
 	 */
 	public function getValue($title) {
-		$activeRow = $this->database->table('settings')->where('title = ?', $title)->fetch();
+		$activeRow = $this->database->table('setting')->where('key = ?', $title)->fetch();
 		return $activeRow->value;
 	}
 
@@ -27,7 +27,7 @@ class SettingsRepository extends Nette\Object {
 	 */
 	public function changeValues($data) {
 		foreach ($data as $key => $value) {
-			$this->database->table('settings')->where('title = ?', $key)->update(array('value' => $value));
+			$this->database->table('setting')->where('key = ?', $key)->update(array('value' => $value));
 		}
 	}
 
@@ -35,7 +35,7 @@ class SettingsRepository extends Nette\Object {
 	 * @return Nette\ArrayHash
 	 */
 	public function getAllValues() {
-		return Nette\ArrayHash::from($this->database->table('settings')->fetchPairs('title', 'value'));
+		return Nette\ArrayHash::from($this->database->table('setting')->fetchPairs('key', 'value'));
 	}
 
 }

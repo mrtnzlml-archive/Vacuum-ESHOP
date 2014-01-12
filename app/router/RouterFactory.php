@@ -13,10 +13,11 @@ use Nette\Application\Routers\SimpleRouter;
  */
 class RouterFactory extends \Nette\Object {
 
-	/** @var \Model\SettingsRepository @inject */
-	public $settings;
 	/** @var \Model\ProductRepository @inject */
 	public $products;
+
+	/** @var \Model\Repository\SettingRepository @inject */
+	public $settingRepository;
 
 	/**
 	 * @return \Nette\Application\IRouter
@@ -46,7 +47,7 @@ class RouterFactory extends \Nette\Object {
 		//$router[] = new Route('admin/sign-<action>', 'Admin:Sign:');
 
 		$allProducts = $this->products->getAllActual()->select('id')->count();
-		$itemsPerPage = $this->settings->getValue('items_per_page');
+		$itemsPerPage = $this->settingRepository->findKey('items_per_page');
 		$range = range(1, ceil($allProducts/$itemsPerPage));
 		$paginator = implode('|', $range);
 		$router[] = new Route("<presenter>/<action>[/<paginator-page [$paginator]>]", array(
