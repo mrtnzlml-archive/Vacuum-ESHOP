@@ -23,7 +23,7 @@ class VariantsRepository extends Nette\Object {
 	 * @return Nette\Database\Table\Selection
 	 */
 	public function getAllVariants() {
-		return $this->database->table('variants');
+		return $this->database->table('variant');
 	}
 
 	/**
@@ -31,7 +31,7 @@ class VariantsRepository extends Nette\Object {
 	 * @return Nette\Database\Table\Selection
 	 */
 	public function getById($id) {
-		return $this->database->table('variants')->where('id = ?', $id);
+		return $this->database->table('variant')->where('id = ?', $id);
 	}
 
 	/**
@@ -39,7 +39,7 @@ class VariantsRepository extends Nette\Object {
 	 * @return Nette\Database\Table\Selection
 	 */
 	public function getVariantsByProductId($id) {
-		return $this->database->table('variants_products')->where('products_id = ?', $id);
+		return $this->database->table('product_variant')->where('products_id = ?', $id);
 	}
 
 	/**
@@ -47,7 +47,7 @@ class VariantsRepository extends Nette\Object {
 	 * @return Nette\Database\Table\Selection
 	 */
 	public function getVariantItems($variant_id) {
-		return $this->database->table('variants_items')->where('variants_id = ?', $variant_id);
+		return $this->database->table('variant_item')->where('variants_id = ?', $variant_id);
 	}
 
 	/**
@@ -55,7 +55,7 @@ class VariantsRepository extends Nette\Object {
 	 * @return Nette\Database\Table\Selection
 	 */
 	public function getVariantItem($id) {
-		return $this->database->table('variants_items')->where('id = ?', $id);
+		return $this->database->table('variant_item')->where('id = ?', $id);
 	}
 
 	/**
@@ -64,10 +64,10 @@ class VariantsRepository extends Nette\Object {
 	 * @return mixed
 	 */
 	public function variants_products_add($variant_id, $products_id) {
-		if ($this->database->table('variants_products')->where('products_id = ?', $products_id)->count() == 1) {
-			$this->database->table('variants_products')->where('products_id = ?', $products_id)->delete();
+		if ($this->database->table('product_variant')->where('product_id = ?', $products_id)->count() == 1) {
+			$this->database->table('product_variant')->where('product_id = ?', $products_id)->delete();
 		}
-		return $this->database->table('variants_products')->insert(array(
+		return $this->database->table('product_variant')->insert(array(
 			'variants_id' => $variant_id,
 			'products_id' => $products_id,
 		));
@@ -78,7 +78,7 @@ class VariantsRepository extends Nette\Object {
 	 * @return int
 	 */
 	public function variants_products_delete($product_id) {
-		return $this->database->table('variants_products')->where('products_id = ?', $product_id)->delete();
+		return $this->database->table('product_variant')->where('product_id = ?', $product_id)->delete();
 	}
 
 	/**
@@ -86,7 +86,7 @@ class VariantsRepository extends Nette\Object {
 	 * @return int
 	 */
 	public function variants_products_deleteByVar($variant_id) {
-		return $this->database->table('variants_products')->where('variants_id = ?', $variant_id)->delete();
+		return $this->database->table('product_variant')->where('variant_id = ?', $variant_id)->delete();
 	}
 
 	/**
@@ -94,7 +94,7 @@ class VariantsRepository extends Nette\Object {
 	 * @return bool|int|Nette\Database\Table\IRow
 	 */
 	public function newVariant($data) {
-		return $this->database->table('variants')->insert($data);
+		return $this->database->table('variant')->insert($data);
 	}
 
 	/**
@@ -102,7 +102,7 @@ class VariantsRepository extends Nette\Object {
 	 * @return int
 	 */
 	public function delete($id) {
-		return $this->database->table('variants')->where('id = ?', $id)->delete();
+		return $this->database->table('variant')->where('id = ?', $id)->delete();
 	}
 
 	/**
@@ -110,7 +110,7 @@ class VariantsRepository extends Nette\Object {
 	 * @return int
 	 */
 	public function deleteItem($id) {
-		return $this->database->table('variants_items')->where('id = ?', $id)->delete();
+		return $this->database->table('variant_item')->where('id = ?', $id)->delete();
 	}
 
 	/**
@@ -118,7 +118,7 @@ class VariantsRepository extends Nette\Object {
 	 * @return int
 	 */
 	public function deleteItemByVariant($variant_id) {
-		return $this->database->table('variants_items')->where('variants_id = ?', $variant_id)->delete();
+		return $this->database->table('variant_item')->where('variant_id = ?', $variant_id)->delete();
 	}
 
 	/**
@@ -126,7 +126,7 @@ class VariantsRepository extends Nette\Object {
 	 * @return bool|int|Nette\Database\Table\IRow
 	 */
 	public function newItem($data) {
-		return $this->database->table('variants_items')->insert($data);
+		return $this->database->table('variant_item')->insert($data);
 	}
 
 	/**
@@ -135,7 +135,7 @@ class VariantsRepository extends Nette\Object {
 	 * @return int
 	 */
 	public function updateItem($id, $data) {
-		return $this->database->table('variants_items')->where('id = ?', $id)->update($data);
+		return $this->database->table('variant_item')->where('id = ?', $id)->update($data);
 	}
 
 }

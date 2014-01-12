@@ -35,11 +35,9 @@ class ProductPresenter extends BasePresenter {
 	 */
 	public function createComponentDatagrid() {
 		$grid = new \Nextras\Datagrid\Datagrid;
-		$grid->addColumn('promo', 'Promo');
 		$grid->addColumn('active', 'Aktivní')->enableSort();
 		$grid->addColumn('name', 'Název')->enableSort();
 		$grid->addColumn('price', 'Cena')->enableSort();
-		$grid->addColumn('event_date', 'Datum konání')->enableSort();
 		$grid->addColumn('category_id', 'Kategorie')->enableSort();
 		$grid->addColumn('priority', 'Priorita')->enableSort();
 
@@ -53,7 +51,7 @@ class ProductPresenter extends BasePresenter {
 			$form->addText('price');
 			$form->addText('event_date');
 			$categories = array();
-			foreach ($this->categories->read() as $item) {
+			foreach ($this->categoryRepository->findAll() as $item) {
 				$categories[$item->id] = $item->name;
 			}
 			$form->addSelect('category_id', NULL, $categories)->setPrompt('---');
@@ -97,16 +95,13 @@ class ProductPresenter extends BasePresenter {
 	protected function createComponentAddForm() {
 		$form = new Nette\Application\UI\Form;
 		$form->addProtection();
-		$form->getElementPrototype()->class[] = "ajax";
+		//$form->getElementPrototype()->class[] = "ajax";
 
 		$form->addSelect('active', 'Status:', array(
 			'y' => 'Aktivní',
 			'x' => 'Aktivní, ale nelze objednat',
 			'n' => 'Neaktivní (nebude se zobrazovat v obchodu)',
 		));
-
-		$form->addText('event_date', 'Datum konání akce:')
-			->setType('datetime-local');
 
 		$form->addText('name', 'Název produktu:')->setRequired();
 		$form->addText('slug', 'URL slug:');
@@ -119,7 +114,7 @@ class ProductPresenter extends BasePresenter {
 		$form->addText('dph', "Výsledná cena s DPH ($dph%):")->setDisabled();
 
 		$categories = array();
-		foreach ($this->categories->read() as $item) {
+		foreach ($this->categoryRepository->findAll() as $item) {
 			$categories[$item->id] = $item->name;
 		}
 		$form->addSelect('category', 'Kategorie:', $categories);
@@ -149,18 +144,16 @@ class ProductPresenter extends BasePresenter {
 	public function addFormSucceeded(\Nette\Forms\Controls\Button $button) {
 		$vals = $button->getForm()->getValues();
 		try {
-			$data = array(
+			$product = new \Model\Entity\Product(array(
 				'active' => $vals->active,
 				'name' => $vals->name,
 				'slug' => $vals->slug,
 				'price' => $vals->price,
-				'event_date' => $vals->event_date,
-				'category_id' => $vals->category,
+				//'category_id' => $vals->category, FIXME
 				'priority' => $vals->priority,
 				'description' => $vals->description,
-				'lc' => $this->user->identity->lc,
-			);
-			$this->products->add($data);
+			));
+			$this->productRepository->persist($product);
 			$this->flashMessage('Nový produkt úspěšně přidán.', 'alert-success');
 		} catch (\PDOException $exc) {
 			$this->flashMessage($exc->getMessage());

@@ -12,8 +12,9 @@ use LeanMapper;
  *
  * @property int $id
  * @property string $name
- * @property string $price
- * @property int $priority
+ * @property float $price
+ * @property string $price_status
+ * @property int $priority = 0
  */
 class Variant_item extends AEntity {
 

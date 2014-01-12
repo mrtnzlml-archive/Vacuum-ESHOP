@@ -3,6 +3,7 @@
 namespace Model\Entity;
 
 use LeanMapper;
+use Nette;
 
 /**
  * Class Product
@@ -16,10 +17,15 @@ use LeanMapper;
  * @property string $name
  * @property string $description
  * @property string $slug
- * @property double $price
- * @property int $priority
+ * @property float $price
+ * @property int $priority = 0
  * @property string $active
  */
 class Product extends AEntity {
+
+	//TODO:
+	/*public function setSlug($slug) {
+		$this->row->slug = Nette\Utils\Strings::webalize($data['slug'] ? : $data['name']);
+	}*/
 
 }

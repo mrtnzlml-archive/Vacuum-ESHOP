@@ -12,6 +12,7 @@ use LeanMapper;
  *
  * @property int $id
  * @property string $name
+ * @property bool $promo
  */
 class Picture extends AEntity {
 

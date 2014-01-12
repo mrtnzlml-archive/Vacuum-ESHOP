@@ -21,14 +21,6 @@ class ProductRepository extends Nette\Object {
 	}
 
 	/**
-	 * @param $data
-	 */
-	public function add($data) {
-		$data['slug'] = Nette\Utils\Strings::webalize($data['slug'] ? : $data['name']);
-		$this->database->table('product')->insert($data);
-	}
-
-	/**
 	 * @param $id
 	 * @param $data
 	 */

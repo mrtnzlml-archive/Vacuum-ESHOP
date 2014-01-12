@@ -13,9 +13,8 @@ use Nette\Application\Routers\SimpleRouter;
  */
 class RouterFactory extends \Nette\Object {
 
-	/** @var \Model\ProductRepository @inject */
-	public $products;
-
+	/** @var \Model\Repository\ProductRepository @inject */
+	public $productRepository;
 	/** @var \Model\Repository\SettingRepository @inject */
 	public $settingRepository;
 
@@ -46,7 +45,7 @@ class RouterFactory extends \Nette\Object {
 		$router[] = new Route('registrace/', 'Front:Register:new');
 		//$router[] = new Route('admin/sign-<action>', 'Admin:Sign:');
 
-		$allProducts = $this->products->getAllActual()->select('id')->count();
+		$allProducts = $this->productRepository->getActiveCount();
 		$itemsPerPage = $this->settingRepository->findKey('items_per_page');
 		$range = range(1, ceil($allProducts/$itemsPerPage));
 		$paginator = implode('|', $range);
