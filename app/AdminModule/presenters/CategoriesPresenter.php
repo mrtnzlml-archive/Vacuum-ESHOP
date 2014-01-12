@@ -14,6 +14,9 @@ class CategoriesPresenter extends BasePresenter {
 	/** @var \Model\CategoryRepository @inject */
 	public $categories;
 
+	/** @var \Model\Repository\CategoryRepository @inject */
+	public $categoryRepository;
+
 	public function beforeRender() {
 		parent::beforeRender();
 		$empty = $this->categories->read()->count() ? FALSE : TRUE;
@@ -62,7 +65,7 @@ class CategoriesPresenter extends BasePresenter {
 			else
 				$filters[$k . ' LIKE ?'] = "%$v%";
 		}
-		$selection = $this->database->table('categories')->where($filters);
+		$selection = $this->database->table('category')->where($filters);
 		if ($order) {
 			$selection->order(implode(' ', $order));
 		}
@@ -102,8 +105,11 @@ class CategoriesPresenter extends BasePresenter {
 	public function formSucceeded(\Nette\Forms\Controls\Button $button) {
 		$vals = $button->getForm()->getValues();
 		try {
-			//$this->categories->create($vals->name, $vals->slug, $vals->priority, $vals->parent);
-			$this->categories->create($vals->name, $vals->slug, $vals->priority);
+			$category = new Model\Entity\Category;
+			$category->name = $vals->name;
+			$category->slug = $vals->slug;
+			$category->priority = $vals->priority;
+			$this->categoryRepository->persist($category);
 			$button->getForm()->setValues(array(), TRUE); //TODO: lepší reset, toto ignoruje původní setValue();
 			$this->flashMessage('Kategorie byla úspěšně vytvořena.', 'alert-success');
 		} catch (\PDOException $exc) {
@@ -127,8 +133,11 @@ class CategoriesPresenter extends BasePresenter {
 		$vals = $button->getForm()->getValues();
 		try {
 			$this->template->selected = $vals->category_id;
-			//$this->categories->update($vals->category_id, $vals->name, $vals->slug, $vals->priority, $vals->parent);
-			$this->categories->update($vals->category_id, $vals->name, $vals->slug, $vals->priority);
+			$category = $this->categoryRepository->find($vals->category_id);
+			$category->name = $vals->name;
+			$category->slug = $vals->slug;
+			$category->priority = $vals->priority;
+			$this->categoryRepository->persist($category);
 			$this->flashMessage('Změny úspěšně uloženy.', 'alert-success');
 		} catch (\PDOException $exc) {
 			if (strpos($exc->getMessage(), '1062') !== FALSE) { //DUPLICITA
@@ -149,7 +158,7 @@ class CategoriesPresenter extends BasePresenter {
 	 */
 	public function handleDelete($id) {
 		try {
-			$this->categories->delete($id);
+			$this->categoryRepository->delete($this->categoryRepository->find($id));
 		} catch (\PDOException $exc) {
 			if (strpos($exc->getMessage(), '1451') !== FALSE) { //REFERENCE
 				//TODO: změnit RESTRICT v databázi na SET NULL při smazání

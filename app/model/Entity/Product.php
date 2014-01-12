@@ -15,6 +15,8 @@ use LeanMapper;
  * @property double $price
  * @property int $priority
  * @property string $active
+ * @property Category $category m:hasOne
+ * @property Picture[] $pictures m:belongsToMany
  */
 class Product extends AEntity {
 

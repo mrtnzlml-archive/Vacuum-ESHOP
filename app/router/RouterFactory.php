@@ -25,7 +25,7 @@ class RouterFactory extends \Nette\Object {
 		$router = new RouteList();
 		$router[] = new Route('sitemap.xml', 'Front:Export:sitemap');
 		$router[] = new Route('kategorie/<category_slug>[/<paginator-page [0-9]+>]', 'Front:Product:category');
-		$router[] = new Route('akce/<product>', 'Front:Product:detail');
+		$router[] = new Route('akce/<product_slug>', 'Front:Product:detail');
 		$router[] = new Route('auth/<action>[/<id>]', array(
 			'module' => 'Auth',
 			'presenter' => 'Sign',

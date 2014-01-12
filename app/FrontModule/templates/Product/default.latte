@@ -1,14 +1,13 @@
 {block content}
 
 <div class="row">
+	<div class="alert alert-error" n:if="$products_count == 0">Momentálně nejsou žádné produkty k prodeji.</div>
 	<div class="col-lg-4 product" n:foreach="$products as $product">
 		<a n:href="detail $product->slug"><h4>{$product->name}</h4></a>
 		<p class="description">{$product->description|noescape|texy|striptags|truncate:200}</p>
 	</div>
 	{*
-	{if count($products) === 0}
-		<div class="alert alert-error">Momentálně nejsou žádné produkty k prodeji.</div>
-	{/if}
+
 	<div class="col-lg-4 product" n:foreach="$products as $product">
 		{var $picture = $productsRepository->getPromotedPicture($product->id)}
 		{if $picture}

@@ -69,4 +69,6 @@ services:
 	- Model\UserRepository
 	- Model\VariantsRepository
 
+	- Model\Repository\CategoryRepository
+	- Model\Repository\PictureRepository
 	- Model\Repository\ProductRepository
