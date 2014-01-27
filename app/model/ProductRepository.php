@@ -30,7 +30,7 @@ class ProductRepository extends Nette\Object {
 	}
 
 	/**
-	 * @param $id
+	 * @param $product_id
 	 */
 	public function delete($product_id) {
 		$this->database->table('product')->where('id = ?', $product_id)->delete();

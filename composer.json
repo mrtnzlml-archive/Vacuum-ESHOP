@@ -22,6 +22,7 @@
 		"nette/tester": "dev-master",
 		"dg/texy": "dev-release-2.x",
 		"nextras/datagrid": "dev-master",
+		"o5/grido": "dev-master",
 		"srigi/nette-visualpaginator": "dev-master",
 		"janmarek/webloader": "dev-master",
 		"leafo/lessphp": "0.3.*@dev",

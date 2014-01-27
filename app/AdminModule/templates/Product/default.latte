@@ -1,180 +1,192 @@
 {block content}
-{if isset($waiting) && !empty($waiting) && $user->isInRole('admin')}
-	{snippet waiting}
-		{include '../waiting.latte'}
-	{/snippet}
-{/if}
-
 <h2 n:block="title">Přehled všech produktů</h2>
 
-{snippet grid}
-	{control datagrid}
-	<script>
-		$('.product_promo').live('change', function () {
-			var product_id = $(this).data('product-id');
-			$.nette.ajax({
-				type: 'get',
-				url: {link promo!},
-				data: {
-					product_id: product_id
-				}
-			});
-		});
-	</script>
-{/snippet}
+{control datagrid}
 
 <h2 id="scroll">Editační formulář</h2>
 <p>
 	Produkt je vhodné nejdříve vytvořit jako neaktivní, upravit jeho parametry,
-	obrázky a varianty a následně změnit jeho status na aktivní.
+	obrázky, varianty a následně změnit jeho status na aktivní.
 </p>
+
 {snippet form}
-<div class="tabbable">
+	<div class="tabbable">
 
-	<ul id="tabs" class="nav nav-tabs">
-		<li class="active"><a href="#mainTab" data-toggle="tab">Hlavní</a></li>
-		{ifset $selected}
-			<li><a href="#pictures" data-toggle="tab">Obrázky</a></li>
-			<li><a href="#variants" data-toggle="tab">Varianty</a></li>
-		{else}
-			<li class="disabled-red"><a>Další karty se aktivují při editaci produktu!</a></li>
-			<li class="disabled"><a>Obrázky</a></li>
-			<li class="disabled"><a>Varianty</a></li>
-		{/ifset}
-	</ul>
+		<ul id="tabs" class="nav nav-tabs">
+			<li class="active"><a href="#mainTab" data-toggle="tab">Hlavní</a></li>
+			{ifset $selected}
+				<li><a href="#pictures" data-toggle="tab">Obrázky</a></li>
+				<li><a href="#variants" data-toggle="tab">Varianty</a></li>
+				<li><a href="#stock" data-toggle="tab">Sklad</a></li>
+			{else}
+				<li class="disabled-red"><a>Další karty se aktivují při editaci produktu!</a></li>
+				<li class="disabled"><a>Obrázky</a></li>
+				<li class="disabled"><a>Varianty</a></li>
+				<li class="disabled"><a>Sklad</a></li>
+			{/ifset}
+		</ul>
 
-	<div class="tab-content" style="min-height:500px">{*UX*}
-		<div class="tab-pane active" id="mainTab">
-			{form addForm}
-				<ul class="error" n:if="$form->errors">
-					<li n:foreach="$form->errors as $error">{$error}</li>
-				</ul>
-				<div class="row-fluid">
-					<div class="span8">
-						{label active /}
-						{input active, class => span12}
+		<div class="tab-content" style="min-height:500px">
+			<div class="tab-pane active" id="mainTab">
+				{form addForm}
+					<ul class="error" n:if="$form->errors">
+						<li n:foreach="$form->errors as $error">{$error}</li>
+					</ul>
+					<div class="row">
+						<div class="col-lg-8">
+							<div class="form-group">
+								{label active /}
+								{input active, class => "form-control"}
+							</div>
+						</div>
 					</div>
-				</div>
-				<div class="row-fluid">
-					<div class="span4">
-						{label name /}
-						{input name, class => span12}
+					<div class="row">
+						<div class="col-lg-4">
+							<div class="form-group">
+								{label name /}
+								{input name, class => "form-control"}
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group">
+								{label slug /}
+								{input slug, class => "form-control"}
+							</div>
+						</div>
 					</div>
-					<div class="span4">
-						{label slug /}
-						{input slug, class => span12}
+					<div class="row">
+						<div class="col-lg-4">
+							<div class="form-group">
+								{label price /}
+								{input price, class => "form-control"}
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group">
+								{label dph /}
+								{input dph, class => "form-control"}
+							</div>
+						</div>
 					</div>
-				</div>
-				<div class="row-fluid">
-					<div class="span4">
-						{label price /}
-						{input price, class => span12}
+					<div class="row">
+						<div class="col-lg-4">
+							<div class="form-group">
+								{*label category /}
+								{input category, class => "form-control"*}
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group">
+								{label priority /}
+								{input priority, class => "form-control"}
+							</div>
+						</div>
 					</div>
-					<div class="span4">
-						{label dph /}
-						{input dph, class => span12}
+					<div class="row">
+						<div class="col-lg-8">
+							<div class="form-group">
+								{label description /}
+								{input description, class => "form-control", placeholder => "Texy!", style => "height:100px"}
+							</div>
+						</div>
 					</div>
-				</div>
-				<div class="row-fluid">
-					<div class="span4">
-						{label category /}
-						{input category, class => span12}
+					<div class="row">
+						<div class="col-lg-4">
+							<div class="form-group">
+								{input insert, class => "form-control btn btn-success"}
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group">
+								{input update, class => "form-control btn btn-warning"}
+							</div>
+						</div>
 					</div>
-					<div class="span4">
-						{label priority /}
-						{input priority, class => span12}
-					</div>
-				</div>
-				<div class="row-fluid">
-					<div class="span8">
-						{label description /}
-						{input description, class => span12, placeholder => "Texy!", style => "height:100px"}
-					</div>
-				</div>
-				<div class="row-fluid">
-					<div class="span4">
-						{input insert, class => "span12 btn btn-success"}
-					</div>
-					<div class="span4">
-						{input update, class => "span12 btn btn-warning"}
-					</div>
-				</div>
-			{/form}
-		</div>
-
-		<div class="tab-pane" id="pictures">
-			<div id="image-uploader"{ifset $selected} data-id="{$selected}"{/ifset}></div>
-			<div class="row-fluid">
-				<div id="triggerUpload" class="btn btn-primary" style="margin: 20px 0 30px 0;">Nahrát obrázky</div>
+				{/form}
 			</div>
-			{ifset $pictures}
+
+			<div class="tab-pane" id="pictures">
+				<div id="image-uploader"{ifset $selected} data-id="{$selected}"{/ifset}></div>
+				<div class="row-fluid">
+					<div id="triggerUpload" class="btn btn-primary" style="margin: 20px 0 30px 0;">Nahrát obrázky</div>
+				</div>
+				{ifset $pictures}
 				{foreach $pictures as $picture}
 					<div style="float:left;height:250px;width:400px;position:relative;">
 						{ifset $selected}
 							<div class="btn-group" style="position:absolute;">
-								<a n:href="deletePicture!, $picture->id, $selected" class="ajax btn btn-danger delete-picture" data-confirm="Opravdu chcete tento obrázek smazat?">
+								<a n:href="deletePicture!, $picture->id, $selected"
+								   class="ajax btn btn-danger delete-picture"
+								   data-confirm="Opravdu chcete tento obrázek smazat?">
 									<i class="icon-remove icon-white"></i>&nbsp;Smazat
 								</a>
 								<button class="btn btn-success">
 									<i class="icon-fullscreen icon-white"></i>
-									<input class="picture_promo" data-product="{$picture->product_id}" data-picture="{$picture->id}" type="radio" name="test"{if $picture->promo} checked="checked"{/if} />
+									<input class="picture_promo" data-product="{$picture->product_id}"
+										   data-picture="{$picture->id}" type="radio"
+										   name="test"{if $picture->promo} checked="checked"{/if} />
 								</button>
 							</div>
-							<img src="{$basePath}/uploads/{$picture->product_id}/378x400/{$picture->name}" class="img-polaroid" />
+							<img src="{$basePath}/uploads/{$picture->product_id}/378x400/{$picture->name}"
+								 class="img-polaroid"/>
 						{/ifset}
 					</div>
 				{/foreach}
+					<script>
+						$('.picture_promo').live('change', function () {
+							var product_id = $(this).data('product');
+							var picture_id = $(this).data('picture');
+							$.nette.ajax({
+								type: 'get',
+								url: {link picturePromo!},
+								data: {
+									product_id: product_id,
+									picture_id: picture_id
+								}
+							});
+						});
+					</script>
+				{/ifset}
+			</div>
+
+			<div class="tab-pane" id="variants">
+				{form variantSelect}
+					<div class="row-fluid">
+						<div class="span4">
+							{label variant_items /}
+							{input variant_items, class => span12}
+						</div>
+					</div>
+					<div class="row-fluid">
+						<div class="span4">
+							{input select, class => "span12 btn btn-success"}
+						</div>
+					</div>
+				{/form}
+				{*{snippet variants}
+					{control variantEditSelect}
+					{control variantEditIndividual}
+				{/snippet}
 				<script>
-					$('.picture_promo').live('change', function () {
-						var product_id = $(this).data('product');
-						var picture_id = $(this).data('picture');
-						$.nette.ajax({
-							type: 'get',
-							url: {link picturePromo!},
-							data: {
-								product_id: product_id,
-								picture_id: picture_id
-							}
+					$(function() {
+						$("#frm-variantEditSelect-variant_items").change(function() {
+							alert('OK');
+							// TODO: nefunguje?
+							/*
+							var values = $("#frm-variantEditSelect-variant_items").val().split("###");
+							$("#frm-variantEditIndividual-name").val(values[0]);
+							$("#frm-variantEditIndividual-price").val(values[1]);
+							$("#frm-variantEditIndividual-price_status").val(values[2]);
+							$("#frm-variantEditIndividual-priority").val(values[3]);
+							*/
 						});
 					});
-				</script>
-			{/ifset}
-		</div>
+				</script>*}
+			</div>
 
-		<div class="tab-pane" id="variants">
-			{form variantSelect}
-				<div class="row-fluid">
-					<div class="span4">
-						{label variant_items /}
-						{input variant_items, class => span12}
-					</div>
-				</div>
-				<div class="row-fluid">
-					<div class="span4">
-						{input select, class => "span12 btn btn-success"}
-					</div>
-				</div>
-			{/form}
-			{*{snippet variants}
-				{control variantEditSelect}
-				{control variantEditIndividual}
-			{/snippet}
-			<script>
-				$(function() {
-					$("#frm-variantEditSelect-variant_items").change(function() {
-						alert('OK');
-						// TODO: nefunguje?
-						/*
-						var values = $("#frm-variantEditSelect-variant_items").val().split("###");
-						$("#frm-variantEditIndividual-name").val(values[0]);
-						$("#frm-variantEditIndividual-price").val(values[1]);
-						$("#frm-variantEditIndividual-price_status").val(values[2]);
-						$("#frm-variantEditIndividual-priority").val(values[3]);
-						*/
-					});
-				});
-			</script>*}
+			<div class="tab-pane" id="stock">
+				&hellip;
+			</div>
 		</div>
 	</div>
-</div>
 {/snippet}

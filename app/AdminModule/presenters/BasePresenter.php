@@ -42,7 +42,6 @@ abstract class BasePresenter extends \Base\BaseBasePresenter {
 		$this->setting = $this->settings->getAllValues();
 		$this->template->basket = $this->basket;
 		$this->template->setting = $this->setting;
-		$this->template->waiting = iterator_to_array($this->users->getWaitingUsers()->limit(10));
 
 		// modifikator {...|money}
 		$this->template->registerHelper('money', function ($value) {

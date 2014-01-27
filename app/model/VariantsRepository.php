@@ -39,7 +39,7 @@ class VariantsRepository extends Nette\Object {
 	 * @return Nette\Database\Table\Selection
 	 */
 	public function getVariantsByProductId($id) {
-		return $this->database->table('product_variant')->where('products_id = ?', $id);
+		return $this->database->table('product_variant')->where('product_id = ?', $id);
 	}
 
 	/**

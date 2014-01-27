@@ -40,4 +40,13 @@ abstract class ARepository extends LeanMapper\Repository {
 		);
 	}
 
+	/**
+	 * @return \DibiFluent
+	 */
+	public function grid() {
+		$statement = $this->connection->select('*')
+			->from($this->getTable());
+		return $statement;
+	}
+
 }

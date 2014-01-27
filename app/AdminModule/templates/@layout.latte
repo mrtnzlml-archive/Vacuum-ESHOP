@@ -11,6 +11,7 @@
 				<li n:if="$user->isAllowed('Admin:Product')" n:class="$presenter->name=='Admin:Product'?active"><a n:href=":Admin:Product:default">Produkty</a></li>
 				<li n:if="$user->isAllowed('Admin:Categories')" n:class="$presenter->name=='Admin:Categories'?active"><a n:href=":Admin:Categories:default">Kategorie</a></li>
 				<li n:if="$user->isAllowed('Admin:Variants')" n:class="$presenter->name=='Admin:Variants'?active"><a n:href=":Admin:Variants:default">Varianty</a></li>
+				<li><a href="#">Parametry</a></li>
 				<li n:if="$user->isAllowed('Admin:Users')" n:class="$presenter->name=='Admin:Users'?active"><a n:href=":Admin:Users:default">Uživatelé</a></li>
 				<li n:if="$user->isAllowed('Admin:Orders')" n:class="$presenter->name=='Admin:Orders'?active"><a n:href=":Admin:Orders:default">Objednávky</a></li>
 				<li n:if="$user->isAllowed('Admin:Settings')" n:class="$presenter->name=='Admin:Settings'?active"><a n:href=":Admin:Settings:default">Nastavení</a></li>
