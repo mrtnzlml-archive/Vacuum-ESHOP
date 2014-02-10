@@ -38,7 +38,6 @@ services:
 			- addResource('price')
 			- addResource('Front:Basket')
 			- addResource('Admin:Categories')
-			- addResource('Admin:Lc')
 			- addResource('Admin:Orders')
 			- addResource('Admin:Product')
 			- addResource('Admin:Settings')
