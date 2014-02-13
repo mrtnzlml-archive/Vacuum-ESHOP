@@ -7,7 +7,6 @@
 
 php:
 	date.timezone: Europe/Prague
-	# zlib.output_compression: yes
 
 nette:
 	session:
@@ -21,7 +20,16 @@ nette:
 		debugger: TRUE
 		accessors: TRUE
 
+extensions:
+	console: Kdyby\Console\DI\ConsoleExtension
+	events: Kdyby\Events\DI\EventsExtension
+	annotations: Kdyby\Annotations\DI\AnnotationsExtension
+	doctrine: Kdyby\Doctrine\DI\OrmExtension
+
 services:
+	- App\Products(@doctrine.dao(Entity\Product))
+	- App\Settings(@doctrine.dao(Entity\Setting))
+
 	- LeanMapper\Connection(%database%)
 	- Model\Entity\EntityFactory
 	- Model\Mapper\DefaultMapper
@@ -63,11 +71,9 @@ services:
 
 	- Model\OrdersRepository
 	- Model\ProductRepository
-	- Model\SettingsRepository
 	- Model\UserRepository
 	- Model\VariantsRepository
 
 	- Model\Repository\CategoryRepository
 	- Model\Repository\PictureRepository
 	- Model\Repository\ProductRepository
-	- Model\Repository\SettingRepository

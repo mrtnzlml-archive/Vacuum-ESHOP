@@ -9,14 +9,14 @@ SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
 DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
-	`id`          INT(11)             NOT NULL AUTO_INCREMENT,
-	`name`        TEXT                NOT NULL,
-	`description` TEXT                NOT NULL,
-	`slug`        VARCHAR(255)        NOT NULL,
-	`price`       DECIMAL(10, 2)      NOT NULL,
-	`stock`       INT(11)             NOT NULL DEFAULT '0',
-	`priority`    INT(11)             NOT NULL DEFAULT '0',
-	`active`      ENUM('y', 'x', 'n') NOT NULL DEFAULT 'n',
+	`id`          INT(11)                  NOT NULL AUTO_INCREMENT,
+	`name`        TEXT                     NOT NULL,
+	`description` TEXT                     NOT NULL,
+	`slug`        VARCHAR(255)             NOT NULL,
+	`price`       DECIMAL(10, 2)           NOT NULL,
+	`stock`       INT(11)                  NOT NULL DEFAULT '0',
+	`priority`    INT(11)                  NOT NULL DEFAULT '0',
+	`active`      ENUM('y', 'x', 'n', 'd') NOT NULL DEFAULT 'n',
 	`category_id` INT(11) DEFAULT NULL,
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `slug` (`slug`),
@@ -37,7 +37,11 @@ CREATE TABLE `category` (
 	`priority` INT(11)      NOT NULL DEFAULT '0',
 	`parent`   INT(11) DEFAULT NULL,
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `slug` (`slug`)
+	UNIQUE KEY `slug` (`slug`),
+	KEY `parent` (`parent`),
+	CONSTRAINT `category_ibfk` FOREIGN KEY (`parent`) REFERENCES `category` (`id`)
+		ON DELETE SET NULL -- ON PARENT CATEGORY DELETE SET NULL
+		ON UPDATE CASCADE -- ON PARENT CATEGORY UPDATE BE CASCADE
 )
 	ENGINE = InnoDB
 	DEFAULT CHARSET = utf8;

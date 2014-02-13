@@ -1,17 +1,23 @@
 <?php
 
-namespace Model\Entity;
+namespace Entity;
 
-use LeanMapper;
+use Doctrine\ORM\Mapping as ORM;
+use Kdyby\Doctrine;
 
 /**
- * Class Setting
- * @package Model\Entity
- *
- * @property int $id
- * @property string $key
- * @property string $value
+ * @ORM\Entity
+ * @ORM\Table(name="setting")
  */
-class Setting extends AEntity {
+class Setting extends Doctrine\Entities\BaseEntity {
+
+	/** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue */
+	protected $id;
+
+	/** @ORM\Column(type="string") */
+	protected $key;
+
+	/** @ORM\Column(type="text") */
+	protected $value;
 
 }

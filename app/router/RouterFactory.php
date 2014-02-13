@@ -15,8 +15,8 @@ class RouterFactory extends \Nette\Object {
 
 	/** @var \Model\Repository\ProductRepository @inject */
 	public $productRepository;
-	/** @var \Model\Repository\SettingRepository @inject */
-	public $settingRepository;
+	///** @var \Model\Repository\SettingRepository @inject */
+	//public $settingRepository;
 
 	/**
 	 * @return \Nette\Application\IRouter
@@ -46,7 +46,7 @@ class RouterFactory extends \Nette\Object {
 		//$router[] = new Route('admin/sign-<action>', 'Admin:Sign:');
 
 		$allProducts = $this->productRepository->getActiveCount();
-		$itemsPerPage = $this->settingRepository->findKey('items_per_page');
+		$itemsPerPage = 8;//$this->settingRepository->findKey('items_per_page'); FIXME
 		$range = range(1, ceil($allProducts/$itemsPerPage));
 		$paginator = implode('|', $range);
 		$router[] = new Route("<presenter>/<action>[/<paginator-page [$paginator]>]", array(

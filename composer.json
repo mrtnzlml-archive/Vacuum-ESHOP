@@ -26,6 +26,7 @@
 		"srigi/nette-visualpaginator": "dev-master",
 		"janmarek/webloader": "dev-master",
 		"leafo/lessphp": "0.3.*@dev",
-		"tharos/leanmapper": "dev-master"
+		"tharos/leanmapper": "dev-master",
+		"kdyby/doctrine": "@dev"
 	}
 }

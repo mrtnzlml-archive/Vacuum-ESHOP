@@ -1,18 +1,18 @@
 {block content}
 	<div class="row">
 		<div class="col-lg-5">
-			{foreach $product->pictures as $picture}
+			{*foreach $product->pictures as $picture}
 				<a href="{$basePath}/uploads/{$picture->product->id}/default/{$picture->name}"
 				   rel="useZoom: 'zoom01', smallImage: '{$basePath}/uploads/{$picture->product->id}/378x400/{$picture->name}'"
 				   class="cloud-zoom-gallery">
 					<img src="{$basePath}/uploads/{$picture->product->id}/116x100/{$picture->name}"
 						 class="img-polaroid gallery"/>
 				</a>
-			{/foreach}
+			{/foreach*}
 		</div>
 		<div class="col-lg-7">
 			<h2 n:block=title>{$product->name}</h2>
-			{control buyForm}
+			{*control buyForm*}
 			<p>{$product->description|noescape|texy}</p>
 		</div>
 
@@ -127,7 +127,7 @@
 					$(".priceDPH").html(number_format(newPriceDPH, 0, ',', ' ') + '&nbsp;Kč');
 				} else if (values[2] === 'price') {
 					$(".price").html(number_format(values[1], 0, ',', ' ') + '&nbsp;Kč');
-					var newPriceDPH = +(values[1] / 100 *{$setting->dph}) + +values[1];
+					var newPriceDPH = +(values[1] / 100 *{$settings['dph']}) + +values[1];
 					$(".priceDPH").html(number_format(newPriceDPH, 0, ',', ' ') + '&nbsp;Kč');
 				} else { //undefined
 					$(".price").html(number_format($('.price').data('default'), 0, ',', ' ') + '&nbsp;Kč');

@@ -1,31 +1,37 @@
 <?php
 
-namespace Model\Entity;
+namespace Entity;
 
-use LeanMapper;
-use Nette;
+use Doctrine\ORM\Mapping as ORM;
+use Kdyby\Doctrine;
 
 /**
- * Class Product
- * @package Model\Entity
- *
- * @property Category $category m:hasOne
- * @property Picture[] $pictures m:belongsToMany
- * @property Variant[] $variants m:hasMany
- *
- * @property int $id
- * @property string $name
- * @property string $description
- * @property string $slug
- * @property float $price
- * @property int $priority = 0
- * @property string $active
+ * @ORM\Entity
+ * @ORM\Table(name="product")
  */
-class Product extends AEntity {
+class Product extends Doctrine\Entities\BaseEntity {
 
-	//TODO:
-	/*public function setSlug($slug) {
-		$this->row->slug = Nette\Utils\Strings::webalize($data['slug'] ? : $data['name']);
-	}*/
+	/** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue */
+	protected $id;
+
+	/** @ORM\Column(type="text") */
+	protected $name;
+
+	/** @ORM\Column(type="text") */
+	protected $description;
+
+	/** @ORM\Column(type="string") */
+	protected $slug;
+
+	/** @ORM\Column(type="decimal", precision=10, scale=2) */
+	protected $price;
+
+	/** @ORM\Column(type="integer") */
+	protected $stock;
+
+	/** @ORM\Column(type="integer") */
+	protected $priority;
+
+	protected $active;
 
 }
