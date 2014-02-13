@@ -29,10 +29,13 @@ extensions:
 services:
 	- App\Products(@doctrine.dao(Entity\Product))
 	- App\Settings(@doctrine.dao(Entity\Setting))
+	- App\Categories(@doctrine.dao(Entity\Category))
 
-	- LeanMapper\Connection(%database%)
-	- Model\Entity\EntityFactory
-	- Model\Mapper\DefaultMapper
+	#- Fresh\Mailer([host: 'fresh-hosting.cz', username: %mailer_user%, password: %mailer_pass%, secure: ''])
+	- Fresh\Mailer([host: 'smtp.gmail.com', username: %mailer_user%, password: %mailer_pass%, secure: 'ssl'])
+
+	routerFactory: App\RouterFactory
+	router: @routerFactory::createRouter
 	authenticator: Model\Authenticator
 	authorizator:
 		class: Nette\Security\Permission
@@ -60,20 +63,3 @@ services:
 			- allow('moderator', 'Admin:Variants')
 
 			- allow('admin')
-
-	routerFactory: App\RouterFactory
-	router: @routerFactory::createRouter
-
-	- Basket
-
-	#- Fresh\Mailer([host: 'fresh-hosting.cz', username: %mailer_user%, password: %mailer_pass%, secure: ''])
-	- Fresh\Mailer([host: 'smtp.gmail.com', username: %mailer_user%, password: %mailer_pass%, secure: 'ssl'])
-
-	- Model\OrdersRepository
-	- Model\ProductRepository
-	- Model\UserRepository
-	- Model\VariantsRepository
-
-	- Model\Repository\CategoryRepository
-	- Model\Repository\PictureRepository
-	- Model\Repository\ProductRepository

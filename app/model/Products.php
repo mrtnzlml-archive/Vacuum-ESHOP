@@ -21,6 +21,10 @@ class Products extends Nette\Object {
 		return $this->dao->findAll();
 	}
 
+	public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null) {
+		return $this->dao->findBy($criteria, $orderBy, $limit, $offset);
+	}
+
 	public function findOneBy(array $criteria, array $orderBy = null) {
 		return $this->dao->findOneBy($criteria, $orderBy);
 	}

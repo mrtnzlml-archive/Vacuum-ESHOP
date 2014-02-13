@@ -43,9 +43,14 @@ class ProductPresenter extends BasePresenter {
 		}
 	}
 
-	/*public function renderCategory($category_slug) {
-
-	}*/
+	public function renderCategory($category_slug) {
+		$products = $this->products->findBy(['category.slug' => $category_slug]);
+		if ($products) {
+			$this->template->products = $products;
+		} else {
+			$this->error();
+		}
+	}
 
 	/*
 		public function renderCategory($category_slug = NULL) {
@@ -64,15 +69,6 @@ class ProductPresenter extends BasePresenter {
 					->where('category.slug', $category_slug)
 					->limit($limit, $paginator->offset)
 					->order('priority DESC, event_date ASC');
-			}
-		}
-
-		public function renderDetail($product_slug) {
-			try {
-				$this->product = $this->productRepository->findBySlug($product_slug);
-				$this->template->product = $this->product;
-			} catch (\Exception $exc) {
-				$this->error();
 			}
 		}
 

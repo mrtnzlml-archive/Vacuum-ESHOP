@@ -20,7 +20,7 @@ class Product extends Doctrine\Entities\BaseEntity {
 	/** @ORM\Column(type="text") */
 	protected $description;
 
-	/** @ORM\Column(type="string") */
+	/** @ORM\Column(type="string", unique=TRUE) */
 	protected $slug;
 
 	/** @ORM\Column(type="decimal", precision=10, scale=2) */
@@ -33,5 +33,11 @@ class Product extends Doctrine\Entities\BaseEntity {
 	protected $priority;
 
 	protected $active;
+
+	/**
+	 * @ORM\ManyToOne(targetEntity="Category")
+	 * @ORM\JoinColumn(name="category_id")
+	 */
+	protected $category;
 
 }

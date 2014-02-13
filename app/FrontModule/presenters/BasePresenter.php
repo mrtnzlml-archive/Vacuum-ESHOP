@@ -8,17 +8,14 @@ use WebLoader;
 
 abstract class BasePresenter extends Nette\Application\UI\Presenter {
 
+	/** @var \App\Categories @inject */
+	public $categories;
 	/** @var \App\Settings @inject */
 	public $settings;
 	/** @var \Nette\Caching\IStorage @inject */
 	public $cacheStorage;
-
-	/** @var \Basket @inject */
-	public $basket;
-	/** @var \Model\ProductRepository @inject */
-	public $products;
-	/** @var \Model\Repository\CategoryRepository @inject */
-	public $categoryRepository;
+	///** @var \Basket @inject */
+	//public $basket;
 
 	public function createComponentCss() {
 		$files = new WebLoader\FileCollection(WWW_DIR . '/css');
@@ -40,10 +37,8 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
 	public function beforeRender() {
 		parent::beforeRender();
 		$this->template->settings = $this->settings->findAll();
-
-		$this->template->basket = $this->basket;
-		$this->template->categories = $this->categoryRepository->findAll(['order' => 'priority DESC, name ASC']);
-		//$this->template->productsRepository = $this->products;
+		$this->template->categories = $this->categories->findBy(array(), ['priority' => 'DESC', 'name' => 'ASC']);
+		$this->template->basket = array();//$this->basket; FIXME
 
 		// modifikator {...|money}
 		$this->template->registerHelper('money', function ($value) {

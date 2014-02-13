@@ -13,8 +13,8 @@ use Nette\Application\Routers\SimpleRouter;
  */
 class RouterFactory extends \Nette\Object {
 
-	/** @var \Model\Repository\ProductRepository @inject */
-	public $productRepository;
+	///** @var \Model\Repository\ProductRepository @inject */
+	//public $productRepository;
 	///** @var \Model\Repository\SettingRepository @inject */
 	//public $settingRepository;
 
@@ -25,7 +25,7 @@ class RouterFactory extends \Nette\Object {
 		$router = new RouteList();
 		$router[] = new Route('sitemap.xml', 'Front:Export:sitemap');
 		$router[] = new Route('kategorie/<category_slug>[/<paginator-page [0-9]+>]', 'Front:Product:category');
-		$router[] = new Route('akce/<product_slug>', 'Front:Product:detail');
+		$router[] = new Route('produkt/<product_slug>', 'Front:Product:detail');
 		$router[] = new Route('auth/<action>[/<id>]', array(
 			'module' => 'Auth',
 			'presenter' => 'Sign',
@@ -43,9 +43,8 @@ class RouterFactory extends \Nette\Object {
 		));
 
 		$router[] = new Route('registrace/', 'Front:Register:new');
-		//$router[] = new Route('admin/sign-<action>', 'Admin:Sign:');
 
-		$allProducts = $this->productRepository->getActiveCount();
+		$allProducts = 20;//$this->productRepository->getActiveCount();
 		$itemsPerPage = 8;//$this->settingRepository->findKey('items_per_page'); FIXME
 		$range = range(1, ceil($allProducts/$itemsPerPage));
 		$paginator = implode('|', $range);

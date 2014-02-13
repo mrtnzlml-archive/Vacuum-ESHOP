@@ -1,21 +1,29 @@
 <?php
 
-namespace Model\Entity;
+namespace Entity;
 
-use LeanMapper;
+use Doctrine\ORM\Mapping as ORM;
+use Kdyby\Doctrine;
 
 /**
- * Class Category
- * @package Model\Entity
- *
- * @property Category[] $category m:belongsToMany (Product)
- *
- * @property int $id
- * @property string $name
- * @property string $slug
- * @property int $priority = 0
- * @property int|null $parent
+ * @ORM\Entity
+ * @ORM\Table(name="category")
  */
-class Category extends AEntity {
+class Category extends Doctrine\Entities\BaseEntity {
+
+	/** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue */
+	protected $id;
+
+	/** @ORM\Column(type="text") */
+	protected $name;
+
+	/** @ORM\Column(type="string", unique=TRUE) */
+	protected $slug;
+
+	/** @ORM\Column(type="integer") */
+	protected $priority;
+
+	/** @ORM\Column(type="integer", nullable=TRUE) */
+	protected $parent;
 
 }

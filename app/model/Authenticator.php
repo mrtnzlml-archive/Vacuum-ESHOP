@@ -11,8 +11,8 @@ use Nette\Utils\Strings;
  */
 class Authenticator extends Nette\Object implements Nette\Security\IAuthenticator {
 
-	/** @var Nette\Database\Context @inject */
-	public $database;
+	///** @var Nette\Database\Context @inject */
+	public $database = NULL; //FIXME
 
 	/**
 	 * Performs an authentication.
