@@ -1,0 +1,32 @@
+language: php
+
+php:
+  - 5.4
+  - 5.5
+  - 5.6
+  - hhvm
+  - hhvm-nightly
+
+env:
+  - DB=mysql
+
+matrix:
+  allow_failures:
+    - php: hhvm
+    - php: hhvm-nightly
+  exclude:
+    - php: hhvm
+    - php: hhvm-nightly
+  include:
+    - php: hhvm
+      script: vendor/bin/tester -p php tests -s -c tests/php.ini
+    - php: hhvm-nightly
+      script: vendor/bin/tester -p php tests -s -c tests/php.ini
+
+script: vendor/bin/tester tests -s -c tests/php.ini
+
+before_script:
+  - sh -c "if [ '$DB' = 'mysql' ]; then mysql -u root -e 'create database eshop;'; fi"
+  - sh -c "if [ '$DB' = 'mysql' ]; then mysql -u root -D eshop < eshop.sql; fi"
+  - composer selfupdate
+  - composer install --prefer-dist --no-dev
